@@ -6,7 +6,7 @@ import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
-public class MeepMeepTesting {
+public class RedShortRightPath2plus4 {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
@@ -20,7 +20,7 @@ public class MeepMeepTesting {
                 // SPIKE MARK **LEFT**
                 //.lineToY(-40.2)
                 //.splineToLinearHeading(new Pose2d(15,-36.2, 0.5235987755982988),0) // Math.PI/6
-                                .strafeToConstantHeading(new Vector2d(22,-36.2))
+                .strafeToConstantHeading(new Vector2d(22,-36.2))
                 .strafeToConstantHeading(new Vector2d(22,-39.2))
                 // Mergi putin in spate ca sa nu dai in pixelul MOV
                 //.strafeTo(new Vector2d(22,-50))  // 14 , -40

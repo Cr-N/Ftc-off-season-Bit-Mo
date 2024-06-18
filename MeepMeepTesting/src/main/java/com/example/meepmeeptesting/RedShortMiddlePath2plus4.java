@@ -6,7 +6,7 @@ import com.noahbres.meepmeep.MeepMeep;
 import com.noahbres.meepmeep.roadrunner.DefaultBotBuilder;
 import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 
-public class MeepMeepTesting {
+public class RedShortMiddlePath2plus4 {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(800);
 
@@ -17,23 +17,20 @@ public class MeepMeepTesting {
 
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(11.5, -63.2, Math.PI/2))
 
-                // SPIKE MARK **LEFT**
-                //.lineToY(-40.2)
-                //.splineToLinearHeading(new Pose2d(15,-36.2, 0.5235987755982988),0) // Math.PI/6
-                                .strafeToConstantHeading(new Vector2d(22,-36.2))
-                .strafeToConstantHeading(new Vector2d(22,-39.2))
-                // Mergi putin in spate ca sa nu dai in pixelul MOV
-                //.strafeTo(new Vector2d(22,-50))  // 14 , -40
-                .strafeTo(new Vector2d(30,-45))  // 14 , -40
-                //.splineToLinearHeading(new Pose2d(24,-50,0),0)
+                // SPIKE MARK **MIDDLE**
+                .lineToY(-33.2)
+
+                // AJUSTARE sa nu dai in PIXELUL MOV
+                .lineToYConstantHeading(-37.7) // -40.2
+                 .lineToYSplineHeading(-42.2,0) //-42.2
 
                 // Spline catre Backdrop 1
-                .splineToLinearHeading(new Pose2d(48.4,-30.4,0),0)
+                .splineToConstantHeading(new Vector2d(48.4, -35.4), 0) // Spline catre Backdrop 1 tangent 0
+
                 // deploy pixel 1
                 .waitSeconds(1)
 
                 //  mergi in spate putin
-                .lineToX(45)
                 .lineToXSplineHeading(42.4,Math.PI/2)
 
                 // Mergi la Pozitia de unde PLECI CATRE STACK
@@ -50,7 +47,6 @@ public class MeepMeepTesting {
                 .lineToXLinearHeading(-43,0)
                 .lineToXConstantHeading(44.5)
 
-
                 // Spline catre Backdrop 2
                 .splineToConstantHeading(new Vector2d(48.4, -35.4), 0)
 
@@ -58,7 +54,6 @@ public class MeepMeepTesting {
                 .waitSeconds(1)
 
                 //  mergi in spate putin
-                .lineToX(45)
                 .lineToXSplineHeading(42.4,Math.PI/2)
 
                 // Mergi la Pozitia de unde PLECI CATRE STACK
@@ -71,9 +66,10 @@ public class MeepMeepTesting {
                 .waitSeconds(1)
 
                 // mergi inapoi la pozitia de unde ai plecat ca sa pleci catre STACK
-                .lineToX(-50) // -43
+                .lineToX(-50)
                 .lineToXLinearHeading(-43,0)
                 .lineToXConstantHeading(44.5)
+
 
                 // Spline catre Backdrop 2
                 .splineToConstantHeading(new Vector2d(48.4, -35.4), 0)

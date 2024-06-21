@@ -4,4 +4,4 @@ Check out the [team odometry playlist](https://www.youtube.com/playlist?list=PLr
 
 Check out the [linktree](https://linktr.ee/CrN10)- just some boring stuff ;)
 
-//wow
+//wow ce fain

@@ -20,7 +20,7 @@ import org.firstinspires.ftc.teamcode.HardWare.HardwareMaps;
 
 import kotlin.jvm.internal.Intrinsics;
 
-@TeleOp(name="Field Centric testing ❌", group = "OpModes")
+@TeleOp(name="Field Centric testing", group = "OpModes")
 public class FieldCentric extends LinearOpMode {
     HardwareMap hwmap;
     GamepadEx gm1 = new GamepadEx(gamepad1);

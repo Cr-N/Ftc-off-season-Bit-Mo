@@ -1,19 +1,18 @@
-package org.firstinspires.ftc.teamcode.TeleOps;
+package org.firstinspires.ftc.teamcode.Vision;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
-import org.firstinspires.ftc.teamcode.Vision.FirstVisionProcessor;
 import org.firstinspires.ftc.vision.VisionPortal;
-
-
-public class FirstVisionOpmode extends OpMode {
-    private FirstVisionProcessor visionProcessor;
+@TeleOp(name = "Vision Processors Testing", group = "Vision")
+public class TestVisionProcessorsOpMode extends OpMode {
+    private Blue3BoxVisionProcessor visionProcessor;
     private VisionPortal visionPortal;
 
     @Override
     public void init() {
-        visionProcessor = new FirstVisionProcessor();
+        visionProcessor = new Blue3BoxVisionProcessor();
         visionPortal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), visionProcessor);
     }
 
@@ -23,7 +22,6 @@ public class FirstVisionOpmode extends OpMode {
 
     @Override
     public void start() {
-        visionPortal.stopStreaming();
     }
 
     @Override

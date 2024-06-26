@@ -37,8 +37,6 @@ dependencies {
     implementation "com.acmerobotics.roadrunner:core:1.0.0-beta8"
     implementation "com.acmerobotics.roadrunner:actions:1.0.0-beta8"
     implementation "com.acmerobotics.dashboard:dashboard:0.4.14"
-    implementation 'org.ftclib.ftclib:core:2.0.1' // core for FTClib
-    implementation 'org.ftclib.ftclib:vision:2.0.1' // vision from FTClib
-    // TODO: LOOK HERE CC NEEDED! https://docs.ftclib.org/ftclib/v/v2.0.0/installation#install-easyopencv-dependency
-    // TODO: Update Robot Controller App on CC, see https://ftc-docs.firstinspires.org/en/latest/ftc_sdk/updating/rc_app/Updating-the-RC-App.html
+    implementation 'org.ftclib.ftclib:vision:2.1.0' // vision from FTClib
+    implementation 'org.ftclib.ftclib:core:2.1.1' // core for FTClib
 }

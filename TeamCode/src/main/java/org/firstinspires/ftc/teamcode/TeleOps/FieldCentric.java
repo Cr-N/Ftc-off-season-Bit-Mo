@@ -2,29 +2,17 @@ package org.firstinspires.ftc.teamcode.TeleOps;
 
 
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
-import com.arcrobotics.ftclib.hardware.motors.Motor;
-import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.DcMotorEx;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
-import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-import org.firstinspires.ftc.teamcode.HardWare.HardwareMaps;
-
-import org.firstinspires.ftc.teamcode.HardWare.HardwareMaps;
-
-import kotlin.jvm.internal.Intrinsics;
+import org.firstinspires.ftc.teamcode.HardWare.Hardware;
 
 @TeleOp(name="Field Centric testing", group = "OpModes")
 public class FieldCentric extends LinearOpMode {
     HardwareMap hwmap;
     GamepadEx gm1 = new GamepadEx(gamepad1);
-    HardwareMaps hm = new HardwareMaps(hwmap);
+    Hardware hm = new Hardware(hwmap);
 
     @Override
     public void runOpMode()
@@ -65,10 +53,10 @@ public class FieldCentric extends LinearOpMode {
             double frontRightPower = (rotY - rotX - rx) / denominator;
             double backRightPower = (rotY + rotX - rx) / denominator;
 
-            hm.frontLeftMotor.set(frontLeftPower);
-            hm.backLeftMotor.set(backLeftPower);
-            hm.frontRightMotor.set(frontRightPower);
-            hm.backRightMotor.set(backRightPower);
+            hm.FL.set(frontLeftPower);
+            hm.BL.set(backLeftPower);
+            hm.FR.set(frontRightPower);
+            hm.BL.set(backRightPower);
         }
     }
 

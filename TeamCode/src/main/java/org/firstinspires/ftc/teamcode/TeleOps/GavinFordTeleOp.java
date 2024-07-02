@@ -1,29 +1,29 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
-import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.HardWare.Hardware;
 
 // https://www.youtube.com/watch?v=gnSW2QpkGXQ
 @TeleOp(name = "Un alt fel de TeleOp - DE TESTAT" , group = "TEST")
 public class GavinFordTeleOp extends LinearOpMode {
-    HardwareMap hwmap;
-    Hardware hm = new Hardware(hwmap);
-    GamepadEx gm1 = new GamepadEx(gamepad1);
+    //Hardware hardware = new Hardware(this);
+    //GamepadEx gm1 = new GamepadEx(gamepad1);
+
+    Hardware hardware = new Hardware(this);
 
     double x,y,turn,theta,power,sin,cos,max,FLpow,FRpow,BLpow,BRpow;
 
     @Override
-    public void runOpMode() throws InterruptedException {
+    public void runOpMode() {
+        hardware.init();
         waitForStart();
         while (opModeIsActive())
         {
-            x = gm1.getLeftX();
-            y = -gm1.getLeftY();
-            turn = gm1.getRightX();
+            x = gamepad1.left_stick_x;
+            y = -gamepad1.left_stick_y;
+            turn = gamepad1.right_stick_x;
 
             theta = Math.atan2(y,x);
             power = Math.hypot(x,y);
@@ -44,6 +44,10 @@ public class GavinFordTeleOp extends LinearOpMode {
                 BRpow /= power + Math.abs(turn);
             }
 
+            hardware.FL.setPower(FLpow);
+            hardware.FR.setPower(FRpow);
+            hardware.BL.setPower(BLpow);
+            hardware.BR.setPower(BRpow);
         }
 
     }

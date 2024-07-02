@@ -1,26 +1,21 @@
-package org.firstinspires.ftc.teamcode.TeleOps;
+/*package org.firstinspires.ftc.teamcode.TeleOps;
 
 
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.teamcode.HardWare.Hardware;
 
 @TeleOp(name="Field Centric testing", group = "OpModes")
 public class FieldCentric extends LinearOpMode {
-    HardwareMap hwmap;
     GamepadEx gm1 = new GamepadEx(gamepad1);
-    Hardware hm = new Hardware(hwmap);
-
+    Hardware hardware = new Hardware(this);
     @Override
     public void runOpMode()
     {
-        hm.imu.init();
-        hm.imu.reset();
-
-        double[] imuAngles = hm.imu.getAngles();
+        hardware.init();
+        double[] imuAngles =  hardware.imu.getAngles();
         
         waitForStart();
 
@@ -35,7 +30,7 @@ public class FieldCentric extends LinearOpMode {
             // it can be freely changed based on preference.
             // The equivalent button is start on Xbox-style controllers.
             if (gamepad1.options) {
-                hm.imu.reset();
+                hardware.imu.reset();
             }
 
             // Rotate the movement direction counter to the bot's rotation
@@ -53,11 +48,11 @@ public class FieldCentric extends LinearOpMode {
             double frontRightPower = (rotY - rotX - rx) / denominator;
             double backRightPower = (rotY + rotX - rx) / denominator;
 
-            hm.FL.set(frontLeftPower);
-            hm.BL.set(backLeftPower);
-            hm.FR.set(frontRightPower);
-            hm.BL.set(backRightPower);
+            hardware.FL.setPower(frontLeftPower);
+            hardware.BL.setPower(backLeftPower);
+            hardware.FR.setPower(frontRightPower);
+            hardware.BL.setPower(backRightPower);
         }
     }
 
-}
+}*/

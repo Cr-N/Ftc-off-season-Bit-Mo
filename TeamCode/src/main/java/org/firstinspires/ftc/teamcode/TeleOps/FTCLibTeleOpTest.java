@@ -14,17 +14,17 @@ public class FTCLibTeleOpTest extends LinearOpMode {
     // uses field-centric or robot-centric driving styles. The
     // differences between them can be read here in the docs:
     // https://docs.ftclib.org/ftclib/features/drivebases#control-scheme
-    static final boolean FIELD_CENTRIC = false;
+    static final boolean FIELD_CENTRIC = true;
 
     @Override
     public void runOpMode() throws InterruptedException {
         // constructor takes in frontLeft, frontRight, backLeft, backRight motors
         // IN THAT ORDER
         MecanumDrive drive = new MecanumDrive(
-                new Motor(hardwareMap, "frontLeft", Motor.GoBILDA.RPM_435),
-                new Motor(hardwareMap, "frontRight", Motor.GoBILDA.RPM_435),
-                new Motor(hardwareMap, "backLeft", Motor.GoBILDA.RPM_435),
-                new Motor(hardwareMap, "backRight", Motor.GoBILDA.RPM_435)
+                new Motor(hardwareMap, "FL", Motor.GoBILDA.RPM_223),
+                new Motor(hardwareMap, "FR", Motor.GoBILDA.RPM_223),
+                new Motor(hardwareMap, "BL", Motor.GoBILDA.RPM_223),
+                new Motor(hardwareMap, "BR", Motor.GoBILDA.RPM_223)
         );
 
         // This is the built-in IMU in the REV hub.

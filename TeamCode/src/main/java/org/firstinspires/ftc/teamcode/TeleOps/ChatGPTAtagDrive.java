@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.teamcode.TeleOps;
+/*package org.firstinspires.ftc.teamcode.TeleOps;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -19,10 +19,10 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 // To do: Make the driveRobot call at the end of the while OpMode is active
-@Disabled
+//@Disabled
 // CHECK THIS FILE: ClaudeAiHelpedNewTry.java !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-@TeleOp(name="Advanced Drive to AprilTag TRY NR 1", group = "Concept")
-public class AdvancedAprilTagDriveChatGPT extends LinearOpMode {
+//@TeleOp(name="Advanced Drive to AprilTag TRY NR 1", group = "Concept")
+public class ChatGPTAtagDrive extends LinearOpMode {
     final double DESIRED_DISTANCE = 12.0;
     final double SPEED_GAIN = 0.03;
     final double STRAFE_GAIN = 0.02;
@@ -213,3 +213,4 @@ public class AdvancedAprilTagDriveChatGPT extends LinearOpMode {
         }
     }
 }
+*/

@@ -2,6 +2,8 @@ package org.firstinspires.ftc.teamcode.tests;
 
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
+import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -23,6 +25,7 @@ public class SimpleTeleOp extends LinearOpMode {
 
     @Override
     public void runOpMode() {
+        GamepadEx gm1 = new GamepadEx(gamepad1);
         hardware.init();
         telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
@@ -42,12 +45,12 @@ public class SimpleTeleOp extends LinearOpMode {
 
             double leftPower;
             double rightPower;
-            double right_trigger = gamepad1.right_trigger;
-            double left_trigger = gamepad1.left_trigger;
+            double right_trigger = gm1.getTrigger(GamepadKeys.Trigger.RIGHT_TRIGGER);
+            double left_trigger = gm1.getTrigger(GamepadKeys.Trigger.LEFT_TRIGGER);
 
 
-            double drive = -gamepad1.left_stick_y;
-            double turn = gamepad1.right_stick_x;
+            double drive = -gm1.getLeftY(); // left stick y
+            double turn = gm1.getRightX(); // right stick x
             leftPower = Range.clip(drive + turn, -1.0, 1.0);
             rightPower = Range.clip(drive - turn, -1.0, 1.0);
             hardware.BL.setPower(leftPower);

@@ -7,6 +7,8 @@ import com.arcrobotics.ftclib.hardware.motors.Motor;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.HardWare.Hardware;
+
 @TeleOp
 public class FTCLibTeleOpTest extends LinearOpMode {
 
@@ -18,6 +20,8 @@ public class FTCLibTeleOpTest extends LinearOpMode {
 
     @Override
     public void runOpMode() throws InterruptedException {
+        Hardware hardware = new Hardware(this);
+        hardware.init();
         // constructor takes in frontLeft, frontRight, backLeft, backRight motors
         // IN THAT ORDER
         MecanumDrive drive = new MecanumDrive(

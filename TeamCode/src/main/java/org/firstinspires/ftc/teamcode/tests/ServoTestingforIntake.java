@@ -1,38 +1,47 @@
 package org.firstinspires.ftc.teamcode.tests;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import org.firstinspires.ftc.teamcode.HardWare.Hardware;
+import org.firstinspires.ftc.teamcode.Subsystems.Intake;
 
-@TeleOp(name = "TEST servo pentru intake")
-public class ServoTestingforIntake extends LinearOpMode {
-    GamepadEx gm1 = new GamepadEx(gamepad1);
-    int servoPosition= 0;
-    Hardware hardware = new Hardware(this);
+@TeleOp
+public class ServoTestingforIntake extends LinearOpMode{
+    private Intake intake;
+    boolean lastLB = false, currentLB , lastRB = false , currentRB , lastRight_Stick_Button = false , currentRight_Stick_Button;
+
+
     @Override
-    public void runOpMode() {
-        hardware.init();
-
+    public void runOpMode() throws InterruptedException {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+        intake = new Intake(this);
+        GamepadEx gm1 = new GamepadEx(gamepad1);
         waitForStart();
-        while(opModeIsActive()){
+        while (opModeIsActive()){
+        currentLB = gm1.isDown(GamepadKeys.Button.LEFT_BUMPER);
+        currentRB = gm1.isDown(GamepadKeys.Button.RIGHT_BUMPER);
+        currentRight_Stick_Button = gm1.isDown(GamepadKeys.Button.RIGHT_STICK_BUTTON);
+        if(currentLB && !lastLB){
+            intake.DEPLOY_1();
+        }
+        if(currentRB && !lastRB){
+            intake.DEPLOY_2();
+        }
+        if(currentRight_Stick_Button && !lastRight_Stick_Button){
+            intake.pickUp();
+        }
 
-            if(gm1.wasJustPressed(GamepadKeys.Button.DPAD_UP)){
-                if(servoPosition != 360) {
-                    servoPosition = servoPosition + 10;
-                    hardware.claw.turnToAngle(servoPosition);
-                }
-            }
-            if(gm1.wasJustPressed(GamepadKeys.Button.DPAD_DOWN)){
-                if(servoPosition != 0) {
-                    servoPosition = servoPosition - 10;
-                    hardware.claw.turnToAngle(servoPosition);
-                }
-            }
+           telemetry.addData("s", intake.getIntakeState());
+            telemetry.update();
+
+            lastLB = currentLB;
+        lastRB = currentRB;
+        lastRight_Stick_Button = currentRight_Stick_Button;
         }
 
     }
-
 }

@@ -13,9 +13,8 @@ public class Slides implements Subsystem {
 
     public static class Params{
         public int startPosition = 0;
-        public int moveBy = 100;
-        public int intakePosition = 50;
-        public int hangPosition = 1100;
+        public int intakePosition = 0;
+        public int hangPosition = 1250;
         public int LEVEL_1 = 200;
         public int LEVEL_2 = 600;
         public int LEVEL_3 = 1000;
@@ -23,8 +22,9 @@ public class Slides implements Subsystem {
         public int leftPos = startPosition;
         public int rightPos = startPosition;
         public double speedOfSlides = 0.5;
-        public double manualControlSpeed = 0.2;
-        public int MAXIMUM_POSITION = 1350;
+        public double manualControlSpeed = 0.5;
+        public double   P_Stanga =3;
+        public  double P_Dreapta=3;
         public enum State_of_slides{
             INTAKE_POSITION,
             HANG_POSITION,
@@ -41,8 +41,8 @@ public class Slides implements Subsystem {
     public static Params PARAMETERS = new Params();
     Params.ControlState controlState = Params.ControlState.LEVELS_MODE;
     Params.State_of_slides StateofSlides = Params.State_of_slides.INTAKE_POSITION;
-    public DcMotorEx Slider_DR = null;
-    public DcMotorEx Slider_ST = null;
+    private DcMotorEx Slider_DR = null; // this was just public idk if it breaks it
+    private DcMotorEx Slider_ST = null; // this was just public idk if it breaks it
 
     public Slides(LinearOpMode opMode) {
         myOpmode = opMode;
@@ -51,11 +51,23 @@ public class Slides implements Subsystem {
         if (this.hardwareMap != null) {
             Slider_DR = hardwareMap.get(DcMotorEx.class , "Slider_DR");
             Slider_ST = hardwareMap.get(DcMotorEx.class , "Slider_ST");
+
+            Slider_ST.setPositionPIDFCoefficients(PARAMETERS.P_Stanga);
+            Slider_DR.setPositionPIDFCoefficients(PARAMETERS.P_Dreapta);
+
             Slider_DR.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
             Slider_ST.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
             Slider_ST.setDirection(DcMotorSimple.Direction.REVERSE);
+
             Slider_ST.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
             Slider_DR.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            Slider_ST.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            Slider_DR.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+            PARAMETERS.leftPos = Slider_ST.getCurrentPosition();
+            PARAMETERS.rightPos = Slider_DR.getCurrentPosition(); // remember to update these in the teleOp!!!!!!
         } else {
             throw new NullPointerException("HardwareMap is null.");
         }
@@ -63,7 +75,7 @@ public class Slides implements Subsystem {
     public void handleManualControlUP(){
         if(controlState == Params.ControlState.MANUAL_MODE)
         {
-            if(Slider_DR.getCurrentPosition() < PARAMETERS.MAXIMUM_POSITION && Slider_ST.getCurrentPosition() < PARAMETERS.MAXIMUM_POSITION)
+            if(PARAMETERS.rightPos < PARAMETERS.LEVEL_4 && PARAMETERS.leftPos < PARAMETERS.LEVEL_4)
             {
                 Slider_ST.setPower(PARAMETERS.manualControlSpeed);
                 Slider_DR.setPower(PARAMETERS.manualControlSpeed);
@@ -73,7 +85,7 @@ public class Slides implements Subsystem {
     public void handleManualControlDOWN(){
         if(controlState == Params.ControlState.MANUAL_MODE)
         {
-            if(Slider_DR.getCurrentPosition() > PARAMETERS.startPosition && Slider_ST.getCurrentPosition() < PARAMETERS.startPosition)
+            if(PARAMETERS.rightPos > PARAMETERS.LEVEL_1 && PARAMETERS.leftPos > PARAMETERS.LEVEL_1)
             {
                 Slider_ST.setPower(-PARAMETERS.manualControlSpeed);
                 Slider_DR.setPower(-PARAMETERS.manualControlSpeed);
@@ -96,8 +108,56 @@ public class Slides implements Subsystem {
             controlState = Params.ControlState.LEVELS_MODE;
             Slider_DR.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             Slider_ST.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+            if(PARAMETERS.leftPos < 400){
+                moveToLEVEL_1();
+                StateofSlides = Params.State_of_slides.AT_LEVEL_1;
+            }
+            if(PARAMETERS.leftPos >=400 && PARAMETERS.leftPos <800) {
+                moveToLEVEL_2();
+                StateofSlides = Params.State_of_slides.AT_LEVEL_2;
+            }
+            if(PARAMETERS.leftPos >=800 && PARAMETERS.leftPos < 1125){
+                moveToLEVEL_3();
+                StateofSlides = Params.State_of_slides.AT_LEVEL_3;
+            }
+            if(PARAMETERS.leftPos >= 1125){
+                moveToLEVEL_4();
+                StateofSlides = Params.State_of_slides.AT_LEVEL_4;
+            }
         }
 
+    }
+    public void changeControlStateTo_LEVELS_MODE(){
+        if(controlState == Params.ControlState.MANUAL_MODE){
+            controlState = Params.ControlState.LEVELS_MODE;
+            Slider_DR.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            Slider_ST.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+
+            if(PARAMETERS.leftPos < 400){
+                moveToLEVEL_1();
+                StateofSlides = Params.State_of_slides.AT_LEVEL_1;
+            }
+            if(PARAMETERS.leftPos >=400 && PARAMETERS.leftPos <800) {
+                moveToLEVEL_2();
+                StateofSlides = Params.State_of_slides.AT_LEVEL_2;
+            }
+            if(PARAMETERS.leftPos >=800 && PARAMETERS.leftPos < 1125){
+                moveToLEVEL_3();
+                StateofSlides = Params.State_of_slides.AT_LEVEL_3;
+            }
+            if(PARAMETERS.leftPos >= 1125){
+                moveToLEVEL_4();
+                StateofSlides = Params.State_of_slides.AT_LEVEL_4;
+            }
+        }
+    }
+    public void changeControlStateTo_MANUAL_MODE(){
+        if(controlState == Params.ControlState.LEVELS_MODE){
+            controlState = Params.ControlState.MANUAL_MODE;
+            Slider_DR.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+            Slider_ST.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
+        }
     }
     public void MoveSliders(){
         Slider_ST.setTargetPosition(PARAMETERS.leftPos);
@@ -160,8 +220,6 @@ public class Slides implements Subsystem {
         Slider_ST.setTargetPosition(PARAMETERS.intakePosition);
         Slider_DR.setTargetPosition(PARAMETERS.intakePosition);
 
-        updateCurrent_TARGETPositions();
-
         Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -171,8 +229,6 @@ public class Slides implements Subsystem {
     public void moveToLEVEL_1(){
         Slider_ST.setTargetPosition(PARAMETERS.LEVEL_1);
         Slider_DR.setTargetPosition(PARAMETERS.LEVEL_1);
-
-        updateCurrent_TARGETPositions();
 
         Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -184,8 +240,6 @@ public class Slides implements Subsystem {
         Slider_ST.setTargetPosition(PARAMETERS.LEVEL_2);
         Slider_DR.setTargetPosition(PARAMETERS.LEVEL_2);
 
-        updateCurrent_TARGETPositions();
-
         Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -195,8 +249,6 @@ public class Slides implements Subsystem {
     public void moveToLEVEL_3(){
         Slider_ST.setTargetPosition(PARAMETERS.LEVEL_3);
         Slider_DR.setTargetPosition(PARAMETERS.LEVEL_3);
-
-        updateCurrent_TARGETPositions();
 
         Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -208,8 +260,6 @@ public class Slides implements Subsystem {
         Slider_ST.setTargetPosition(PARAMETERS.LEVEL_4);
         Slider_DR.setTargetPosition(PARAMETERS.LEVEL_4);
 
-        updateCurrent_TARGETPositions();
-
         Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -220,20 +270,34 @@ public class Slides implements Subsystem {
         Slider_ST.setTargetPosition(PARAMETERS.hangPosition);
         Slider_DR.setTargetPosition(PARAMETERS.hangPosition);
 
-        updateCurrent_TARGETPositions();
-
         Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         Slider_ST.setPower(PARAMETERS.speedOfSlides);
         Slider_DR.setPower(PARAMETERS.speedOfSlides);
     }
-    public void updateCurrent_TARGETPositions(){
+    /*public void updateCurrent_TARGETPositions(){
         PARAMETERS.leftPos = Slider_ST.getTargetPosition();
         PARAMETERS.rightPos = Slider_DR.getTargetPosition();
     }
     public void updateCurrent_CURRENTPositions(){
         PARAMETERS.leftPos = Slider_ST.getCurrentPosition();
         PARAMETERS.rightPos = Slider_DR.getCurrentPosition();
+    }*/
+    public Params.ControlState getControlState() {
+        return controlState;
+    }
+    public Params.State_of_slides getStateofSlides() {
+        return StateofSlides;
+    }
+    public void updateLeftRightPos(){
+        PARAMETERS.leftPos = Slider_ST.getCurrentPosition();
+        PARAMETERS.rightPos = Slider_DR.getCurrentPosition();
+    }
+    public int getLeftPos(){
+        return PARAMETERS.leftPos;
+    }
+    public int getRightPos(){
+        return PARAMETERS.rightPos;
     }
 }

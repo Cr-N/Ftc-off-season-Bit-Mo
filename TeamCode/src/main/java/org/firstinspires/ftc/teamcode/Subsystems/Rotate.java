@@ -14,17 +14,19 @@ public class Rotate implements Subsystem {
     public static class Params{
 
         public double Rotate_Pick_Up_Position = 120;
-        public double Rotate_Deploy_Position =30;
-        public double Rotate_HangSafe_Position=120;
+        public double Rotate_Deploy_Position =27;
+        public double Rotate_START_Position =50;
+        public double Rotate_HangSafe_Position=120; // to be determined
 
         public enum RotationState{
             AT_PICK_UP_POSITION,
             AT_DEPLOY_POSITION,
+            AT_START_POSITION,
             AT_HangSafe_Position
         }
     }
     public static Rotate.Params PARAMETERS = new Rotate.Params();
-    Params.RotationState StateOfRotation = Params.RotationState.AT_PICK_UP_POSITION;
+    Params.RotationState StateOfRotation = Params.RotationState.AT_START_POSITION;
     private final ServoEx Rotate;
 
     public Rotate(LinearOpMode opMode) {
@@ -51,6 +53,11 @@ public class Rotate implements Subsystem {
         if(StateOfRotation != Params.RotationState.AT_HangSafe_Position)
             Rotate.turnToAngle(PARAMETERS.Rotate_HangSafe_Position);
         StateOfRotation = Params.RotationState.AT_HangSafe_Position;
+    }
+    public void Rotate_To_Intermediary_Position(){
+        if(StateOfRotation != Params.RotationState.AT_START_POSITION)
+            Rotate.turnToAngle(PARAMETERS.Rotate_START_Position);
+        StateOfRotation = Params.RotationState.AT_START_POSITION;
     }
     public Rotate.Params.RotationState getStateOfRotate(){
         return StateOfRotation;

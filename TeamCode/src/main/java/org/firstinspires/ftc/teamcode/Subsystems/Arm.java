@@ -13,12 +13,14 @@ public class Arm implements Subsystem {
     LinearOpMode myOpmode = null;
     public static class Params{
         public double Arm_Pick_Up_Position =30;
-        public double Arm_Deploy_Position = 150;
-        public double Arm_HangSafe_Position = 150;
+        public double Arm_Deploy_Position = 140;
+        public double Arm_HangSafe_Position = 140; // nu
+        public double Arm_Intermediary_Position =50;
         public enum ArmStates{
             AT_PICK_UP_POSITION,
             AT_HangSafe_POSITION,
-            AT_DEPLOY_POSITION
+            AT_DEPLOY_POSITION,
+            AT_INTERMEDIARY_POSITION
         };
 
     }
@@ -28,9 +30,8 @@ public class Arm implements Subsystem {
     public Arm(LinearOpMode opMode) {
         myOpmode = opMode;
         this.hardwareMap = opMode.hardwareMap;
-
         if (this.hardwareMap != null) {
-            Arm = new SimpleServo(hardwareMap, "Arm", 0, 270, AngleUnit.DEGREES);
+            Arm = new SimpleServo(hardwareMap, "Arm", 0, 180, AngleUnit.DEGREES);
         } else {
             throw new NullPointerException("HardwareMap is null.");
         }
@@ -50,6 +51,12 @@ public class Arm implements Subsystem {
             Arm.turnToAngle(PARAMETERS.Arm_HangSafe_Position);
         ArmState = Params.ArmStates.AT_HangSafe_POSITION;
     }
+    public void Arm_To_IntermediaryPosition(){
+        if(ArmState != Params.ArmStates.AT_INTERMEDIARY_POSITION)
+            Arm.turnToAngle(PARAMETERS.Arm_Intermediary_Position);
+        ArmState = Params.ArmStates.AT_INTERMEDIARY_POSITION;
+    }
+
     public double getCurrent_Arm_Angle(){
         return Arm.getAngle();
     }

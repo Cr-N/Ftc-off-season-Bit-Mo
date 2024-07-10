@@ -12,6 +12,7 @@ public class Slides implements Subsystem {
     LinearOpMode myOpmode = null;
 
     public static class Params{
+        public boolean SLIDES_ARE_UNLOCKED=true;
         public int startPosition = 0;
         public int intakePosition = 0;
         public int hangPosition = 1250;
@@ -47,7 +48,6 @@ public class Slides implements Subsystem {
     public Slides(LinearOpMode opMode) {
         myOpmode = opMode;
         this.hardwareMap = opMode.hardwareMap;
-
         if (this.hardwareMap != null) {
             Slider_DR = hardwareMap.get(DcMotorEx.class , "Slider_DR");
             Slider_ST = hardwareMap.get(DcMotorEx.class , "Slider_ST");
@@ -73,22 +73,27 @@ public class Slides implements Subsystem {
         }
     }
     public void handleManualControlUP(){
-        if(controlState == Params.ControlState.MANUAL_MODE)
-        {
-            if(PARAMETERS.rightPos < PARAMETERS.LEVEL_4 && PARAMETERS.leftPos < PARAMETERS.LEVEL_4)
+        if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
+            if(controlState == Params.ControlState.MANUAL_MODE)
             {
-                Slider_ST.setPower(PARAMETERS.manualControlSpeed);
-                Slider_DR.setPower(PARAMETERS.manualControlSpeed);
+                if(PARAMETERS.rightPos < PARAMETERS.LEVEL_4 && PARAMETERS.leftPos < PARAMETERS.LEVEL_4)
+                {
+                    Slider_ST.setPower(PARAMETERS.manualControlSpeed);
+                    Slider_DR.setPower(PARAMETERS.manualControlSpeed);
+                }
             }
         }
     }
     public void handleManualControlDOWN(){
-        if(controlState == Params.ControlState.MANUAL_MODE)
-        {
-            if(PARAMETERS.rightPos > PARAMETERS.LEVEL_1 && PARAMETERS.leftPos > PARAMETERS.LEVEL_1)
+        if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
+
+            if(controlState == Params.ControlState.MANUAL_MODE)
             {
-                Slider_ST.setPower(-PARAMETERS.manualControlSpeed);
-                Slider_DR.setPower(-PARAMETERS.manualControlSpeed);
+                if(PARAMETERS.rightPos > PARAMETERS.LEVEL_1 && PARAMETERS.leftPos > PARAMETERS.LEVEL_1)
+                {
+                    Slider_ST.setPower(-PARAMETERS.manualControlSpeed);
+                    Slider_DR.setPower(-PARAMETERS.manualControlSpeed);
+                }
             }
         }
     }
@@ -111,19 +116,15 @@ public class Slides implements Subsystem {
 
             if(PARAMETERS.leftPos < 400){
                 moveToLEVEL_1();
-                StateofSlides = Params.State_of_slides.AT_LEVEL_1;
             }
             if(PARAMETERS.leftPos >=400 && PARAMETERS.leftPos <800) {
                 moveToLEVEL_2();
-                StateofSlides = Params.State_of_slides.AT_LEVEL_2;
             }
             if(PARAMETERS.leftPos >=800 && PARAMETERS.leftPos < 1125){
                 moveToLEVEL_3();
-                StateofSlides = Params.State_of_slides.AT_LEVEL_3;
             }
             if(PARAMETERS.leftPos >= 1125){
                 moveToLEVEL_4();
-                StateofSlides = Params.State_of_slides.AT_LEVEL_4;
             }
         }
 
@@ -160,121 +161,117 @@ public class Slides implements Subsystem {
         }
     }
     public void MoveSliders(){
-        Slider_ST.setTargetPosition(PARAMETERS.leftPos);
-        Slider_DR.setTargetPosition(PARAMETERS.rightPos);
+        if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
 
-        Slider_DR.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        Slider_ST.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            Slider_ST.setTargetPosition(PARAMETERS.leftPos);
+            Slider_DR.setTargetPosition(PARAMETERS.rightPos);
 
-        Slider_ST.setPower(PARAMETERS.speedOfSlides);
-        Slider_DR.setPower(PARAMETERS.speedOfSlides);
-    }
-    public void handleLevelsUP(){
-        if(controlState == Params.ControlState.LEVELS_MODE)
-        {
-            switch (StateofSlides) {
-                case INTAKE_POSITION:
-                    moveToLEVEL_1();
-                    StateofSlides = Params.State_of_slides.AT_LEVEL_1;
-                    break;
-                case AT_LEVEL_1:
-                    moveToLEVEL_2();
-                    StateofSlides = Params.State_of_slides.AT_LEVEL_2;
-                    break;
-                case AT_LEVEL_2:
-                    moveToLEVEL_3();
-                    StateofSlides = Params.State_of_slides.AT_LEVEL_3;
-                    break;
-                case AT_LEVEL_3:
-                    moveToLEVEL_4();
-                    StateofSlides = Params.State_of_slides.AT_LEVEL_4;
-                    break;
+            Slider_DR.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+            Slider_ST.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
-            }
+            Slider_ST.setPower(PARAMETERS.speedOfSlides);
+            Slider_DR.setPower(PARAMETERS.speedOfSlides);
         }
-    }
-    public void handleLevelsDOWN(){
-        if(controlState == Params.ControlState.LEVELS_MODE)
-        {
-            switch (StateofSlides) {
-                case AT_LEVEL_1:
-                    moveToLEVEL_IntakePosition();
-                    StateofSlides = Params.State_of_slides.INTAKE_POSITION;
-                    break;
-                case AT_LEVEL_2:
-                    moveToLEVEL_1();
-                    StateofSlides = Params.State_of_slides.AT_LEVEL_1;
-                    break;
-                case AT_LEVEL_3:
-                    moveToLEVEL_2();
-                    StateofSlides = Params.State_of_slides.AT_LEVEL_2;
-                    break;
-                case AT_LEVEL_4:
-                    moveToLEVEL_3();
-                    StateofSlides = Params.State_of_slides.AT_LEVEL_3;
-                    break;
-            }
-        }
+
     }
     public void moveToLEVEL_IntakePosition(){
-        Slider_ST.setTargetPosition(PARAMETERS.intakePosition);
-        Slider_DR.setTargetPosition(PARAMETERS.intakePosition);
 
-        Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
 
-        Slider_ST.setPower(PARAMETERS.speedOfSlides);
-        Slider_DR.setPower(PARAMETERS.speedOfSlides);
+            Slider_ST.setTargetPosition(PARAMETERS.intakePosition);
+            Slider_DR.setTargetPosition(PARAMETERS.intakePosition);
+
+            Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            Slider_ST.setPower(PARAMETERS.speedOfSlides);
+            Slider_DR.setPower(PARAMETERS.speedOfSlides);
+
+            StateofSlides = Params.State_of_slides.INTAKE_POSITION;
+        }
     }
     public void moveToLEVEL_1(){
-        Slider_ST.setTargetPosition(PARAMETERS.LEVEL_1);
-        Slider_DR.setTargetPosition(PARAMETERS.LEVEL_1);
 
-        Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
 
-        Slider_ST.setPower(PARAMETERS.speedOfSlides);
-        Slider_DR.setPower(PARAMETERS.speedOfSlides);
+            StateofSlides = Params.State_of_slides.AT_LEVEL_1;
+
+            Slider_ST.setTargetPosition(PARAMETERS.LEVEL_1);
+            Slider_DR.setTargetPosition(PARAMETERS.LEVEL_1);
+
+            Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            Slider_ST.setPower(PARAMETERS.speedOfSlides);
+            Slider_DR.setPower(PARAMETERS.speedOfSlides);
+
+            StateofSlides = Params.State_of_slides.AT_LEVEL_1;
+        }
     }
     public void moveToLEVEL_2(){
-        Slider_ST.setTargetPosition(PARAMETERS.LEVEL_2);
-        Slider_DR.setTargetPosition(PARAMETERS.LEVEL_2);
 
-        Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
 
-        Slider_ST.setPower(PARAMETERS.speedOfSlides);
-        Slider_DR.setPower(PARAMETERS.speedOfSlides);
+            Slider_ST.setTargetPosition(PARAMETERS.LEVEL_2);
+            Slider_DR.setTargetPosition(PARAMETERS.LEVEL_2);
+
+            Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            Slider_ST.setPower(PARAMETERS.speedOfSlides);
+            Slider_DR.setPower(PARAMETERS.speedOfSlides);
+
+            StateofSlides = Params.State_of_slides.AT_LEVEL_2;
+        }
     }
     public void moveToLEVEL_3(){
-        Slider_ST.setTargetPosition(PARAMETERS.LEVEL_3);
-        Slider_DR.setTargetPosition(PARAMETERS.LEVEL_3);
 
-        Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
 
-        Slider_ST.setPower(PARAMETERS.speedOfSlides);
-        Slider_DR.setPower(PARAMETERS.speedOfSlides);
+            Slider_ST.setTargetPosition(PARAMETERS.LEVEL_3);
+            Slider_DR.setTargetPosition(PARAMETERS.LEVEL_3);
+
+            Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            Slider_ST.setPower(PARAMETERS.speedOfSlides);
+            Slider_DR.setPower(PARAMETERS.speedOfSlides);
+
+            StateofSlides = Params.State_of_slides.AT_LEVEL_3;
+        }
     }
     public void moveToLEVEL_4(){
-        Slider_ST.setTargetPosition(PARAMETERS.LEVEL_4);
-        Slider_DR.setTargetPosition(PARAMETERS.LEVEL_4);
 
-        Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
 
-        Slider_ST.setPower(PARAMETERS.speedOfSlides);
-        Slider_DR.setPower(PARAMETERS.speedOfSlides);
+            Slider_ST.setTargetPosition(PARAMETERS.LEVEL_4);
+            Slider_DR.setTargetPosition(PARAMETERS.LEVEL_4);
+
+            Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            Slider_ST.setPower(PARAMETERS.speedOfSlides);
+            Slider_DR.setPower(PARAMETERS.speedOfSlides);
+
+            StateofSlides = Params.State_of_slides.AT_LEVEL_4;
+        }
     }
     public void moveToLEVEL_HangPosition(){
-        Slider_ST.setTargetPosition(PARAMETERS.hangPosition);
-        Slider_DR.setTargetPosition(PARAMETERS.hangPosition);
 
-        Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-        Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
 
-        Slider_ST.setPower(PARAMETERS.speedOfSlides);
-        Slider_DR.setPower(PARAMETERS.speedOfSlides);
+            Slider_ST.setTargetPosition(PARAMETERS.hangPosition);
+            Slider_DR.setTargetPosition(PARAMETERS.hangPosition);
+
+            Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+            Slider_ST.setPower(PARAMETERS.speedOfSlides);
+            Slider_DR.setPower(PARAMETERS.speedOfSlides);
+
+            StateofSlides = Params.State_of_slides.AT_LEVEL_4;
+        }
+
     }
     /*public void updateCurrent_TARGETPositions(){
         PARAMETERS.leftPos = Slider_ST.getTargetPosition();
@@ -290,9 +287,19 @@ public class Slides implements Subsystem {
     public Params.State_of_slides getStateofSlides() {
         return StateofSlides;
     }
+
+    /**
+     * This is VERY IMPORTANT, ALWAYS USE THIS
+     */
     public void updateLeftRightPos(){
         PARAMETERS.leftPos = Slider_ST.getCurrentPosition();
         PARAMETERS.rightPos = Slider_DR.getCurrentPosition();
+    }
+    public void LOCK_SLIDES(){
+        PARAMETERS.SLIDES_ARE_UNLOCKED = false;
+    }
+    public void UNLOCK_SLIDES(){
+        PARAMETERS.SLIDES_ARE_UNLOCKED = true;
     }
     public int getLeftPos(){
         return PARAMETERS.leftPos;

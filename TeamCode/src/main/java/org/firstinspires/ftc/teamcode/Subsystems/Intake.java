@@ -12,9 +12,10 @@ public class Intake implements Subsystem {
     HardwareMap hardwareMap;
     LinearOpMode myOpmode = null;
     public static class Params{
-        public double intakePosition = 19;
-        public double DEPLOY_1 = 12;
-        public double DEPLOY_2 = 19;
+        public double grab_position =43;
+        public double pick_up_position = 18;
+        public double DEPLOY_1 = 25;
+        public double DEPLOY_2 = 18;
         public enum States{
             DEPLOYED_1,
             DEPLOYED_2,
@@ -47,7 +48,13 @@ public class Intake implements Subsystem {
 
     public void pickUp(){
         if(intakeState == Params.States.TO_INTAKE || intakeState == Params.States.DEPLOYED_2 || intakeState == Params.States.DEPLOYED_1){
-            claw.turnToAngle(PARAMETERS.intakePosition);
+            claw.turnToAngle(PARAMETERS.pick_up_position);
+            intakeState = Params.States.TO_INTAKE;
+        }
+    }
+    public void GRAB(){
+        if(intakeState == Params.States.TO_INTAKE){
+            claw.turnToAngle(PARAMETERS.grab_position);
             intakeState = Params.States.HAS_INTAKED;
         }
     }
@@ -61,13 +68,23 @@ public class Intake implements Subsystem {
     public void DEPLOY_2(){
         if(intakeState == Params.States.DEPLOYED_1){
             claw.turnToAngle(PARAMETERS.DEPLOY_2);
-            intakeState = Params.States.DEPLOYED_2;
+            intakeState = Params.States.TO_INTAKE;
         }
     }
-    public void restartIntake(){
-        if(intakeState == Params.States.DEPLOYED_2){
-            claw.turnToAngle(PARAMETERS.intakePosition);
-            intakeState = Params.States.TO_INTAKE;
+    public void handleIntaking(){
+        switch (intakeState){
+            case TO_INTAKE:
+                GRAB();
+                break;
+            case HAS_INTAKED:
+                DEPLOY_1();
+                break;
+            case DEPLOYED_1:
+                DEPLOY_2();
+                break;
+            case DEPLOYED_2:
+                pickUp();
+                break;
         }
     }
     public Params.States getIntakeState(){

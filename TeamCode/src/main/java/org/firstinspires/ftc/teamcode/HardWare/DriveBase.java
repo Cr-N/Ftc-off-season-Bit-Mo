@@ -9,18 +9,14 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class DriveBase {
 
     private LinearOpMode myOpMode = null;
-    //Intake.Params PARAMETERES = new Intake.Params();
 
     // Declare motor objects
     public MotorEx FL = null;
     public MotorEx FR = null;
     public MotorEx BL = null;
     public MotorEx BR = null;
-    // public BNO055IMU imu;
-    // public ServoEx claw;
 
     HardwareMap hardwareMap;
-
 
     public DriveBase(LinearOpMode opMode){
         myOpMode = opMode;

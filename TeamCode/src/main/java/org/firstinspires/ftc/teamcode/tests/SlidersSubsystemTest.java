@@ -1,58 +1,60 @@
-package org.firstinspires.ftc.teamcode.tests;
+/*package org.firstinspires.ftc.teamcode.tests;
 
+import com.acmerobotics.dashboard.FtcDashboard;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
-import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
+import org.firstinspires.ftc.teamcode.HardWare.SpecialGamepad;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides;
 
 @TeleOp
 public class SlidersSubsystemTest extends LinearOpMode {
     Slides slides;
-    boolean lastDpadUp = false , currentDpadUp, lastDpadDown = false , currentDpadDown,lastShareButton = false , currentShareButton;
+    GamepadEx gm1;
+    SpecialGamepad specialGamepad;
     @Override
     public void runOpMode() throws InterruptedException {
+
         slides = new Slides(this);
-        GamepadEx gm1 = new GamepadEx(gamepad1);
+        specialGamepad = new SpecialGamepad(this);
+        gm1 = new GamepadEx(gamepad1);
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
+
+        slides.updateLeftRightPos();
+        telemetry.addLine("Initialized");
+        telemetry.update();
         waitForStart();
         while(opModeIsActive()){
+            slides.updateLeftRightPos();
+            specialGamepad.updateCurrentStates();
 
-            // States for button presses
-            {
-                currentDpadDown = gm1.isDown(GamepadKeys.Button.DPAD_DOWN);
-                currentDpadUp = gm1.isDown(GamepadKeys.Button.DPAD_UP);
-                currentShareButton = gm1.isDown(GamepadKeys.Button.BACK);
-            }
-            // LEVELS control checks
-            if (currentDpadUp && !lastDpadUp) {
+            if (specialGamepad.isPressed_Button_Dpad_Up()) {
                 slides.handleLevelsUP();
             }
-            if (currentDpadDown && !lastDpadDown) {
+            if (specialGamepad.isPressed_Button_Dpad_Down()) {
                 slides.handleLevelsDOWN();
-
             }
-            if(currentShareButton && !lastShareButton){
+            if(specialGamepad.isPressed_Button_BACK()){
                 slides.changeControlMode();
             }
 
-            if(currentDpadUp){
+            if(gamepad1.dpad_up){
                 slides.handleManualControlUP();
             }
-            if(currentDpadDown){
+            if(gamepad1.dpad_down){
                 slides.handleManualControlDOWN();
             }
-            if(gamepad1.atRest()){
+            if(!gamepad1.dpad_up && !gamepad1.dpad_down){
                 slides.handleStopMotorsManualControl();
             }
-            // States for Buttons Presses
-            {
-                lastDpadDown = currentDpadDown;
-                lastDpadUp = currentDpadUp;
-                lastShareButton = currentShareButton;
-            }
-
+            specialGamepad.updateLastStates();
         }
+        telemetry.addData("LeftPos: ",slides.getLeftPos());
+        telemetry.addData("RightPos: ",slides.getRightPos());
+        telemetry.update();
 
     }
 }
+*/

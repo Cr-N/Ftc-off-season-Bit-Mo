@@ -31,7 +31,9 @@ package org.firstinspires.ftc.teamcode.tests;
 
 import android.graphics.Color;
 
+import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
+import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DistanceSensor;
@@ -40,7 +42,7 @@ import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.SwitchableLight;
 
 import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
-
+// Nicu: Turned this from a try catch like it is in the sample into a simple LinearOpMode, it used to have something that changes the color of the RC but I think that's only for phone RC's and we have a CH so...
 /*
  * This OpMode shows how to use a color sensor in a generic
  * way, regardless of which particular make or model of color sensor is used. The OpMode
@@ -107,6 +109,7 @@ public class colorSensorTesting extends LinearOpMode {
     boolean xButtonPreviouslyPressed = false;
     boolean xButtonCurrentlyPressed = false;
     @Override public void runOpMode() {
+        telemetry = new MultipleTelemetry(telemetry, FtcDashboard.getInstance().getTelemetry());
 
 
         // Get a reference to our sensor object. It's recommended to use NormalizedColorSensor over
@@ -167,14 +170,14 @@ public class colorSensorTesting extends LinearOpMode {
             // Update the hsvValues array by passing it to Color.colorToHSV()
             Color.colorToHSV(colors.toColor(), hsvValues);
 
-            telemetry.addLine()
-                    .addData("Red", "%.3f", colors.red)
-                    .addData("Green", "%.3f", colors.green)
-                    .addData("Blue", "%.3f", colors.blue);
-            telemetry.addLine()
-                    .addData("Hue", "%.3f", hsvValues[0])
-                    .addData("Saturation", "%.3f", hsvValues[1])
-                    .addData("Value", "%.3f", hsvValues[2]);
+            telemetry.addLine("\n");
+            telemetry.addData("Red", "%.3f", colors.red);
+            telemetry.addData("Green", "%.3f", colors.green);
+            telemetry.addData("Blue", "%.3f", colors.blue);
+            telemetry.addLine("\n");
+            telemetry.addData("Hue", "%.3f", hsvValues[0]);
+            telemetry.addData("Saturation", "%.3f", hsvValues[1]);
+            telemetry.addData("Value", "%.3f", hsvValues[2]);
             telemetry.addData("Alpha", "%.3f", colors.alpha);
 
             /* If this color sensor also has a distance sensor, display the measured distance.

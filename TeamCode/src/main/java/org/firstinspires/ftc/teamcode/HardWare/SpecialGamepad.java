@@ -4,17 +4,19 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
-
+/////////////////////// DID YOU FORGET TO updateCurrentStates() AND updateLastStates() ////////////////////////////////////////////////////////////////
 public class SpecialGamepad{
     boolean lastA=false,currentA,lastY=false,currentY,lastB=false,currentB,lastX=false,currentX,lastDpadUp=false,currentDpadUp,lastDpadDown=false,currentDpadDown,lastDpadRight=false,currentDpadRight,lastDpadLeft=false,currentDpadLeft,lastRightStickButton=false,currentRightStickButton,lastLeftStickButton=false,currentLeftStickButton,lastStartButton=false,currentStartButton,lastBackButton=false,currentBackButton,lastRB=false,currentRB,lastLB=false,currentLB;
     GamepadEx SpecialGamepadForCheckingButtonPresses;
     LinearOpMode myOpmode = null;
     Gamepad.RumbleEffect quickBlip;
-    Gamepad.LedEffect whiteAlert;
+    Gamepad.LedEffect whiteAlert,greenAlert,purpleAlert,yellowAlert,redAlert;
     public SpecialGamepad(LinearOpMode opMode) {
         myOpmode = opMode;
         this.SpecialGamepadForCheckingButtonPresses = new GamepadEx(myOpmode.gamepad1);
     }
+    /////////////////////// DID YOU FORGET TO updateCurrentStates() AND updateLastStates() ////////////////////////////////////////////////////////////////
+
     public void updateCurrentStates(){
         currentA= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.A);
         currentY= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.Y);
@@ -31,21 +33,23 @@ public class SpecialGamepad{
         currentRB= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.RIGHT_BUMPER);
         currentLB= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.LEFT_BUMPER);
     }
+    /////////////////////// DID YOU FORGET TO updateCurrentStates() AND updateLastStates() ////////////////////////////////////////////////////////////////
+
     public void updateLastStates(){
-        lastA= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.A);
-        lastY= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.Y);
-        lastB= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.B);
-        lastX= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.X);
-        lastDpadUp= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.DPAD_UP);
-        lastDpadDown= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.DPAD_DOWN);
-        lastDpadRight= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.DPAD_RIGHT);
-        lastDpadLeft= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.DPAD_LEFT);
-        lastRightStickButton= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.RIGHT_STICK_BUTTON);
-        lastLeftStickButton= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.LEFT_STICK_BUTTON);
-        lastStartButton= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.START);
-        lastBackButton= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.BACK);
-        lastRB= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.RIGHT_BUMPER);
-        lastLB= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.LEFT_BUMPER);
+        lastA= currentA;
+        lastY= currentY;
+        lastB= currentB;
+        lastX= currentX;
+        lastDpadUp= currentDpadUp;
+        lastDpadDown= currentDpadDown;
+        lastDpadRight= currentDpadRight;
+        lastDpadLeft= currentDpadLeft;
+        lastRightStickButton= currentRightStickButton;
+        lastLeftStickButton= currentLeftStickButton;
+        lastStartButton= currentStartButton;
+        lastBackButton= currentBackButton;
+        lastRB= currentRB;
+        lastLB= currentLB;
     }
     public boolean isPressed_Button_A(){
         return (currentA && !lastA);
@@ -94,6 +98,15 @@ public class SpecialGamepad{
                 .addStep(0.5,0,150)
                 .addStep(0,0.5,150)
                 .addStep(1,1,150)
+               .addStep(0.5,0,150)
+               .addStep(0,0.5,150)
+               .addStep(1,1,150)
+               .addStep(0.5,0,150)
+               .addStep(0,0.5,150)
+               .addStep(1,1,150)
+               .addStep(0.5,0,150)
+               .addStep(0,0.5,150)
+               .addStep(1,1,350)
                .build();
        myOpmode.gamepad1.runRumbleEffect(quickBlip);
     }
@@ -111,7 +124,7 @@ public class SpecialGamepad{
         myOpmode.gamepad1.runLedEffect(whiteAlert);
     }
     public void LED_Yellow_Alert(){
-        whiteAlert = new Gamepad.LedEffect.Builder()
+        yellowAlert = new Gamepad.LedEffect.Builder()
                 .addStep(255,255,0,25)
                 .addStep(0,0,0,225)
                 .addStep(255,255,0,25)
@@ -121,10 +134,10 @@ public class SpecialGamepad{
                 .addStep(255,255,0,25)
                 .addStep(0,0,0,25)
                 .build();
-        myOpmode.gamepad1.runLedEffect(whiteAlert);
+        myOpmode.gamepad1.runLedEffect(yellowAlert);
     }
     public void LED_Green_Alert(){
-        whiteAlert = new Gamepad.LedEffect.Builder()
+        greenAlert = new Gamepad.LedEffect.Builder()
                 .addStep(0,255,0,25)
                 .addStep(0,0,0,25)
                 .addStep(0,255,0,25)
@@ -134,10 +147,10 @@ public class SpecialGamepad{
                 .addStep(0,255,0,25)
                 .addStep(0,0,0,25)
                 .build();
-        myOpmode.gamepad1.runLedEffect(whiteAlert);
+        myOpmode.gamepad1.runLedEffect(greenAlert);
     }
     public void LED_Purple_Alert(){
-        whiteAlert = new Gamepad.LedEffect.Builder()
+        purpleAlert = new Gamepad.LedEffect.Builder()
                 .addStep(119,0,200,25)
                 .addStep(0,0,0,25)
                 .addStep(119,0,200,25)
@@ -147,6 +160,92 @@ public class SpecialGamepad{
                 .addStep(119,0,200,25)
                 .addStep(0,0,0,25)
                 .build();
-        myOpmode.gamepad1.runLedEffect(whiteAlert);
+        myOpmode.gamepad1.runLedEffect(purpleAlert);
     }
+    public void LED_Red_Alert(){
+        redAlert = new Gamepad.LedEffect.Builder()
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .addStep(255,0,0,25)
+                .addStep(0,0,0,25)
+                .build();
+        myOpmode.gamepad1.runLedEffect(redAlert);
+    }
+
 }

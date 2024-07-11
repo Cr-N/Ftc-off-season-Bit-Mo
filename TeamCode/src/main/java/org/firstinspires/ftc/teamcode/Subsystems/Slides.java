@@ -17,9 +17,9 @@ public class Slides implements Subsystem {
         public int intakePosition = 0;
         public int hangPosition = 1250;
         public int LEVEL_1 = 200;
-        public int LEVEL_2 = 600;
-        public int LEVEL_3 = 1000;
-        public int LEVEL_4 = 1250;
+        public int LEVEL_2 = 550;
+        public int LEVEL_3 = 1100;
+        public int LEVEL_4 = 1300;
         public int leftPos = startPosition;
         public int rightPos = startPosition;
         public double speedOfSlides = 0.5;
@@ -72,7 +72,7 @@ public class Slides implements Subsystem {
             throw new NullPointerException("HardwareMap is null.");
         }
     }
-    public void handleManualControlUP(){
+    public void Handle_Manual_Control_UP(){
         if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
             if(controlState == Params.ControlState.MANUAL_MODE)
             {
@@ -84,7 +84,7 @@ public class Slides implements Subsystem {
             }
         }
     }
-    public void handleManualControlDOWN(){
+    public void Handle_Manual_Control_DOWN(){
         if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
 
             if(controlState == Params.ControlState.MANUAL_MODE)
@@ -97,13 +97,13 @@ public class Slides implements Subsystem {
             }
         }
     }
-    public void handleStopMotorsManualControl(){
+    public void Handle_Stop_Motors_Manual_Control(){
         if(controlState == Params.ControlState.MANUAL_MODE){
             Slider_ST.setPower(0);
             Slider_DR.setPower(0);
         }
     }
-    public void changeControlMode(){
+    public void Change_Control_Mode(){
         if(controlState == Params.ControlState.LEVELS_MODE){
             controlState = Params.ControlState.MANUAL_MODE;
             Slider_DR.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
@@ -115,52 +115,52 @@ public class Slides implements Subsystem {
             Slider_ST.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
             if(PARAMETERS.leftPos < 400){
-                moveToLEVEL_1();
+                Move_To_LEVEL_1();
             }
             if(PARAMETERS.leftPos >=400 && PARAMETERS.leftPos <800) {
-                moveToLEVEL_2();
+                Move_To__LEVEL_2();
             }
             if(PARAMETERS.leftPos >=800 && PARAMETERS.leftPos < 1125){
-                moveToLEVEL_3();
+                Move_To_LEVEL_3();
             }
             if(PARAMETERS.leftPos >= 1125){
-                moveToLEVEL_4();
+                Move_To_LEVEL_4();
             }
         }
 
     }
-    public void changeControlStateTo_LEVELS_MODE(){
+    public void Change_CONTROL_STATE_To_LEVELS_MODE(){
         if(controlState == Params.ControlState.MANUAL_MODE){
             controlState = Params.ControlState.LEVELS_MODE;
             Slider_DR.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
             Slider_ST.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
 
             if(PARAMETERS.leftPos < 400){
-                moveToLEVEL_1();
+                Move_To_LEVEL_1();
                 StateofSlides = Params.State_of_slides.AT_LEVEL_1;
             }
             if(PARAMETERS.leftPos >=400 && PARAMETERS.leftPos <800) {
-                moveToLEVEL_2();
+                Move_To__LEVEL_2();
                 StateofSlides = Params.State_of_slides.AT_LEVEL_2;
             }
             if(PARAMETERS.leftPos >=800 && PARAMETERS.leftPos < 1125){
-                moveToLEVEL_3();
+                Move_To_LEVEL_3();
                 StateofSlides = Params.State_of_slides.AT_LEVEL_3;
             }
             if(PARAMETERS.leftPos >= 1125){
-                moveToLEVEL_4();
+                Move_To_LEVEL_4();
                 StateofSlides = Params.State_of_slides.AT_LEVEL_4;
             }
         }
     }
-    public void changeControlStateTo_MANUAL_MODE(){
+    public void Change_CONTROL_STATE_To_MANUAL_MODE(){
         if(controlState == Params.ControlState.LEVELS_MODE){
             controlState = Params.ControlState.MANUAL_MODE;
             Slider_DR.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
             Slider_ST.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         }
     }
-    public void MoveSliders(){
+    public void Move_Sliders(){
         if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
 
             Slider_ST.setTargetPosition(PARAMETERS.leftPos);
@@ -174,7 +174,7 @@ public class Slides implements Subsystem {
         }
 
     }
-    public void moveToLEVEL_IntakePosition(){
+    public void Move_To_LEVEL_INTAKE_POSITION(){
 
         if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
 
@@ -190,7 +190,7 @@ public class Slides implements Subsystem {
             StateofSlides = Params.State_of_slides.INTAKE_POSITION;
         }
     }
-    public void moveToLEVEL_1(){
+    public void Move_To_LEVEL_1(){
 
         if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
 
@@ -208,7 +208,7 @@ public class Slides implements Subsystem {
             StateofSlides = Params.State_of_slides.AT_LEVEL_1;
         }
     }
-    public void moveToLEVEL_2(){
+    public void Move_To__LEVEL_2(){
 
         if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
 
@@ -224,7 +224,7 @@ public class Slides implements Subsystem {
             StateofSlides = Params.State_of_slides.AT_LEVEL_2;
         }
     }
-    public void moveToLEVEL_3(){
+    public void Move_To_LEVEL_3(){
 
         if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
 
@@ -240,7 +240,7 @@ public class Slides implements Subsystem {
             StateofSlides = Params.State_of_slides.AT_LEVEL_3;
         }
     }
-    public void moveToLEVEL_4(){
+    public void Move_To_LEVEL_4(){
 
         if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
 
@@ -256,7 +256,7 @@ public class Slides implements Subsystem {
             StateofSlides = Params.State_of_slides.AT_LEVEL_4;
         }
     }
-    public void moveToLEVEL_HangPosition(){
+    public void Move_To_LEVEL_Hang_Position(){
 
         if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
 
@@ -281,17 +281,17 @@ public class Slides implements Subsystem {
         PARAMETERS.leftPos = Slider_ST.getCurrentPosition();
         PARAMETERS.rightPos = Slider_DR.getCurrentPosition();
     }*/
-    public Params.ControlState getControlState() {
+    public Params.ControlState Get_Control_State() {
         return controlState;
     }
-    public Params.State_of_slides getStateofSlides() {
+    public Params.State_of_slides Get_State_of_Slides() {
         return StateofSlides;
     }
 
     /**
      * This is VERY IMPORTANT, ALWAYS USE THIS
      */
-    public void updateLeftRightPos(){
+    public void UPDATE_Left_Right_Positions(){
         PARAMETERS.leftPos = Slider_ST.getCurrentPosition();
         PARAMETERS.rightPos = Slider_DR.getCurrentPosition();
     }
@@ -301,10 +301,10 @@ public class Slides implements Subsystem {
     public void UNLOCK_SLIDES(){
         PARAMETERS.SLIDES_ARE_UNLOCKED = true;
     }
-    public int getLeftPos(){
+    public int Get_Left_Pos(){
         return PARAMETERS.leftPos;
     }
-    public int getRightPos(){
+    public int Get_Right_Pos(){
         return PARAMETERS.rightPos;
     }
 }

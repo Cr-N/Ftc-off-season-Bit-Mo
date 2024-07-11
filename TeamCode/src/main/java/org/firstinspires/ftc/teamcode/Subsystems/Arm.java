@@ -12,10 +12,10 @@ public class Arm implements Subsystem {
     HardwareMap hardwareMap;
     LinearOpMode myOpmode = null;
     public static class Params{
-        public double Arm_Pick_Up_Position =30;
-        public double Arm_Deploy_Position = 140;
+        public double Arm_Pick_Up_Position =5;
+        public double Arm_Deploy_Position = 135;
         public double Arm_HangSafe_Position = 140; // nu
-        public double Arm_Intermediary_Position =50;
+        public double Arm_Intermediary_Position =25;
         public enum ArmStates{
             AT_PICK_UP_POSITION,
             AT_HangSafe_POSITION,
@@ -36,34 +36,34 @@ public class Arm implements Subsystem {
             throw new NullPointerException("HardwareMap is null.");
         }
     }
-    public void Arm_To_Pick_Up_Position() {
+    public void Arm_To_PickUp_Position() {
         if(ArmState != Params.ArmStates.AT_PICK_UP_POSITION)
             Arm.turnToAngle(PARAMETERS.Arm_Pick_Up_Position);
         ArmState = Params.ArmStates.AT_PICK_UP_POSITION;
     }
-    public void Arm_To_DeployPosition() {
+    public void Arm_To_Deploy_Position() {
         if(ArmState != Params.ArmStates.AT_DEPLOY_POSITION)
             Arm.turnToAngle(PARAMETERS.Arm_Deploy_Position);
         ArmState = Params.ArmStates.AT_DEPLOY_POSITION;
     }
-    public void Arm_To_HangSafePosition() {
+    public void Arm_To_HangSafe_Position() {
         if(ArmState != Params.ArmStates.AT_HangSafe_POSITION)
             Arm.turnToAngle(PARAMETERS.Arm_HangSafe_Position);
         ArmState = Params.ArmStates.AT_HangSafe_POSITION;
     }
-    public void Arm_To_IntermediaryPosition(){
+    public void Arm_To_Intermediary_Position(){
         if(ArmState != Params.ArmStates.AT_INTERMEDIARY_POSITION)
             Arm.turnToAngle(PARAMETERS.Arm_Intermediary_Position);
         ArmState = Params.ArmStates.AT_INTERMEDIARY_POSITION;
     }
 
-    public double getCurrent_Arm_Angle(){
+    public double Get_Current_Arm_Angle(){
         return Arm.getAngle();
     }
-    public double getCurrent_Arm_Position(){
+    public double Get_Current_Arm_Position(){
         return Arm.getPosition();
     }
-    public Params.ArmStates getArmState(){
+    public Params.ArmStates Get_Arm_State(){
         return ArmState;
     }
 

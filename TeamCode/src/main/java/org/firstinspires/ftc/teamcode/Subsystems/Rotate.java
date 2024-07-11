@@ -13,7 +13,7 @@ public class Rotate implements Subsystem {
     LinearOpMode myOpmode = null;
     public static class Params{
 
-        public double Rotate_Pick_Up_Position = 120;
+        public double Rotate_Pick_Up_Position = 110;
         public double Rotate_Deploy_Position =27;
         public double Rotate_START_Position =50;
         public double Rotate_HangSafe_Position=120; // to be determined
@@ -59,13 +59,13 @@ public class Rotate implements Subsystem {
             Rotate.turnToAngle(PARAMETERS.Rotate_START_Position);
         StateOfRotation = Params.RotationState.AT_START_POSITION;
     }
-    public Rotate.Params.RotationState getStateOfRotate(){
+    public Rotate.Params.RotationState Get_State_Of_Rotate(){
         return StateOfRotation;
     }
-    public double getCurrent_Rotate_Arngle(){
+    public double Get_Current_Rotate_Angle(){
         return Rotate.getAngle();
     }
-    public double getCurrent_Rotate_Position(){
+    public double Get_Current_Rotate_Position(){
         return Rotate.getPosition();
     }
 }

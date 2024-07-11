@@ -46,7 +46,7 @@ public class Intake implements Subsystem {
     }
 
 
-    public void pickUp(){
+    public void PICKUP(){
         if(intakeState == Params.States.TO_INTAKE || intakeState == Params.States.DEPLOYED_2 || intakeState == Params.States.DEPLOYED_1){
             claw.turnToAngle(PARAMETERS.pick_up_position);
             intakeState = Params.States.TO_INTAKE;
@@ -71,7 +71,7 @@ public class Intake implements Subsystem {
             intakeState = Params.States.TO_INTAKE;
         }
     }
-    public void handleIntaking(){
+    public void Handle_Intaking(){
         switch (intakeState){
             case TO_INTAKE:
                 GRAB();
@@ -83,11 +83,11 @@ public class Intake implements Subsystem {
                 DEPLOY_2();
                 break;
             case DEPLOYED_2:
-                pickUp();
+                PICKUP();
                 break;
         }
     }
-    public Params.States getIntakeState(){
+    public Params.States Get_Intake_State(){
         return intakeState;
     }
 }

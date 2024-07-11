@@ -20,11 +20,11 @@ public class ColorSensorSubsystemTest extends LinearOpMode {
 
         waitForStart();
         while (opModeIsActive()){
-            colorSensor.handle_pixel_feedback(); // -KJV John(3:16)"For God so loved the world that He gave His only Begotten Son, that whosoever beliveth in him shall not perish but have everlasting life"
+            colorSensor.Handle_Pixel_Feedback(); // -KJV John(3:16)"For God so loved the world that He gave His only Begotten Son, that whosoever beliveth in him shall not perish but have everlasting life"
 
-            telemetry.addData("Distance STATE:  ", colorSensor.get_distance_state());
-            telemetry.addData("Distance(CM):  ", colorSensor.get_current_distance_param());
-            telemetry.addData("Min Detection Distance :  ", colorSensor.get_minimum_detection_distance_param());
+            telemetry.addData("Distance STATE:  ", colorSensor.Get_Distance_State());
+            telemetry.addData("Distance(CM):  ", colorSensor.Get_Current_Distance_Param());
+            telemetry.addData("Min Detection Distance :  ", colorSensor.Get_Minimum_Detection_Distance_Parameter());
             telemetry.update();
         }
     }

@@ -45,35 +45,35 @@ public class ColorSensor implements Subsystem {
             throw new NullPointerException("HardwareMap is null.");
         }
     }
-    public void updateSensorData(){
+    public void Update_Sensor_Data(){
         PARAMETERS.distance = ((DistanceSensor)colorSensor).getDistance(DistanceUnit.CM);
     }
-    public void handle_pixel_feedback(){
-        updateSensorData();
+    public void Handle_Pixel_Feedback(){
+        Update_Sensor_Data();
 
         if(PARAMETERS.distance < PARAMETERS.min_distance_for_detection){
             Current_DistanceState = Params.DistanceStates.OBJECT_CLOSE;
             if( Current_DistanceState== Params.DistanceStates.OBJECT_CLOSE && Last_DistanceState == Params.DistanceStates.OBJECT_NOT_CLOSE)
-                handle_Driver_Feedback_For_Pixels();
+                Handle_Driver_Feedback_For_Pixels();
         }
         else{
             Current_DistanceState = Params.DistanceStates.OBJECT_NOT_CLOSE;
         }
         Last_DistanceState = Current_DistanceState;
     }
-    public void handle_Driver_Feedback_For_Pixels(){
+    public void Handle_Driver_Feedback_For_Pixels(){
         if(Current_DistanceState == Params.DistanceStates.OBJECT_CLOSE){
             FeedBack_Gamepad.Rumble_Quick_Blip();
             FeedBack_Gamepad.LED_Red_Alert();
         }
     }
-    public Params.DistanceStates get_distance_state() {
+    public Params.DistanceStates Get_Distance_State() {
         return Current_DistanceState;
     }
-    public double get_current_distance_param(){
+    public double Get_Current_Distance_Param(){
         return PARAMETERS.distance;
     }
-    public double get_minimum_detection_distance_param(){
+    public double Get_Minimum_Detection_Distance_Parameter(){
         return PARAMETERS.min_distance_for_detection;
     }
 

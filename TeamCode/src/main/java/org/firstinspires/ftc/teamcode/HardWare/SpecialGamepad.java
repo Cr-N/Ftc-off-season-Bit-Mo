@@ -6,7 +6,7 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.Gamepad;
 /////////////////////// DID YOU FORGET TO updateCurrentStates() AND updateLastStates() ////////////////////////////////////////////////////////////////
 public class SpecialGamepad{
-    boolean lastA=false,currentA,lastY=false,currentY,lastB=false,currentB,lastX=false,currentX,lastDpadUp=false,currentDpadUp,lastDpadDown=false,currentDpadDown,lastDpadRight=false,currentDpadRight,lastDpadLeft=false,currentDpadLeft,lastRightStickButton=false,currentRightStickButton,lastLeftStickButton=false,currentLeftStickButton,lastStartButton=false,currentStartButton,lastBackButton=false,currentBackButton,lastRB=false,currentRB,lastLB=false,currentLB;
+    boolean lastA=false,currentA,lastY=false,currentY,lastB=false,currentB,lastX=false,currentX,lastDpadUp=false,currentDpadUp,lastDpadDown=false,currentDpadDown,lastDpadRight=false,currentDpadRight,lastDpadLeft=false,currentDpadLeft,lastRightStickButton=false,currentRightStickButton,lastLeftStickButton=false,currentLeftStickButton,lastStartButton=false,currentStartButton,lastBackButton=false,currentBackButton,lastRB=false,currentRB,lastLB=false,currentLB,currentTouchPadButton,lastTouchpadButton=false;
     GamepadEx SpecialGamepadForCheckingButtonPresses;
     LinearOpMode myOpmode = null;
     Gamepad.RumbleEffect quickBlip;
@@ -32,6 +32,7 @@ public class SpecialGamepad{
         currentBackButton= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.BACK);
         currentRB= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.RIGHT_BUMPER);
         currentLB= SpecialGamepadForCheckingButtonPresses.isDown(GamepadKeys.Button.LEFT_BUMPER);
+        currentTouchPadButton = myOpmode.gamepad1.touchpad;
     }
     /////////////////////// DID YOU FORGET TO updateCurrentStates() AND updateLastStates() ////////////////////////////////////////////////////////////////
 
@@ -50,6 +51,7 @@ public class SpecialGamepad{
         lastBackButton= currentBackButton;
         lastRB= currentRB;
         lastLB= currentLB;
+        lastTouchpadButton = currentTouchPadButton;
     }
     public boolean isPressed_Button_A(){
         return (currentA && !lastA);
@@ -80,6 +82,9 @@ public class SpecialGamepad{
     }
     public boolean isPressed_Button_START(){
         return (currentStartButton && !lastStartButton);
+    }
+    public boolean isPressed_Button_TouchPad(){
+        return currentTouchPadButton && !lastTouchpadButton;
     }
     public boolean isPressed_Button_Right_Stick_Button(){
         return (currentRightStickButton && !lastRightStickButton);

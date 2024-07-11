@@ -32,10 +32,10 @@ public class ServoTestingforIntake extends LinearOpMode{
             intake.DEPLOY_2();
         }
         if(currentRight_Stick_Button && !lastRight_Stick_Button){
-            intake.pickUp();
+            intake.PICKUP();
         }
 
-           telemetry.addData("s", intake.getIntakeState());
+           telemetry.addData("s", intake.Get_Intake_State());
             telemetry.update();
 
             lastLB = currentLB;

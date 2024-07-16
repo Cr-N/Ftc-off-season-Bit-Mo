@@ -17,6 +17,7 @@ public class ArmWithActions{
         public double Arm_Deploy_Position = 135;
         public double Arm_HangSafe_Position = 140; // nu
         public double Arm_Intermediary_Position =25;
+        public double Arm_Purple_Pixel_Deploy_Position=25;
         public double arm_angle;
         public double lower_arm_error =0.02;
         public double upper_arm_error =0.02;
@@ -24,7 +25,8 @@ public class ArmWithActions{
             AT_PICK_UP_POSITION,
             AT_HangSafe_POSITION,
             AT_DEPLOY_POSITION,
-            AT_INTERMEDIARY_POSITION
+            AT_INTERMEDIARY_POSITION,
+            AT_PURPLE_PIXEL_DEPLOY_POSITION
         };
     }
 
@@ -167,10 +169,40 @@ public class ArmWithActions{
         }
     }
 
+    public class Arm_To_Purple_Pixel_Deploy_Positon implements Action{
+        private boolean initialized = false;
+
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+
+            if(initialized == false){
+
+                if(ArmState != Params.ArmStates.AT_PURPLE_PIXEL_DEPLOY_POSITION){
+                    Arm.turnToAngle(PARAMETERS.Arm_Purple_Pixel_Deploy_Position);
+                    initialized = true;
+                }
+            }
+
+            PARAMETERS.arm_angle = Arm.getAngle();
+
+            telemetryPacket.put("arm angle ", PARAMETERS.arm_angle);
+            telemetryPacket.put("arm state ", ArmState);
+
+            if(PARAMETERS.arm_angle < PARAMETERS.Arm_Purple_Pixel_Deploy_Position- PARAMETERS.lower_arm_error || PARAMETERS.arm_angle > PARAMETERS.Arm_Purple_Pixel_Deploy_Position + PARAMETERS.upper_arm_error){
+                // true reruns action
+                return true;
+            }
+            else{
+                // false stops action
+                ArmState = Params.ArmStates.AT_PURPLE_PIXEL_DEPLOY_POSITION;
+                return false;
+            }
+        }
+    }
+
     public Action Arm_To_PickUp_Position(){
         return new Arm_To_PickUp_Position();
     }
-
 
     public Action Arm_To_Deploy_Position(){
         return new Arm_To_Deploy_Position();
@@ -182,6 +214,10 @@ public class ArmWithActions{
 
     public Action Arm_To_Intermediary_Position(){
         return new Arm_To_Intermediary_Position();
+    }
+
+    public Action Arm_To_Purple_Pixel_Deploy_Positon(){
+        return new Arm_To_Purple_Pixel_Deploy_Positon();
     }
 
     public double Get_Current_Arm_Angle(){

@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class SlidesWithActionsForAutos {
 
     public static class Params{
-        public boolean SLIDES_ARE_UNLOCKED=true;
+        public boolean SLIDES_ARE_UNLOCKED=false;
         public int startPosition = 0;
         public int intakePosition = 0;
         public int LEVEL_1 = 200;
@@ -28,16 +28,11 @@ public class SlidesWithActionsForAutos {
         public  double P_Dreapta=3;
         public enum State_of_slides{
             INTAKE_POSITION,
-            HANG_POSITION,
             AT_LEVEL_1,
             AT_LEVEL_2,
             AT_LEVEL_3,
             AT_LEVEL_4,
         };
-        public enum ControlState{
-            LEVELS_MODE,
-            MANUAL_MODE
-        }
     }
     public static Params PARAMETERS = new Params();
     Params.State_of_slides StateofSlides = Params.State_of_slides.INTAKE_POSITION;
@@ -88,9 +83,10 @@ public class SlidesWithActionsForAutos {
 
             telemetryPacket.put("left slider pos ",PARAMETERS.leftPos);
             telemetryPacket.put("right slider pos ",PARAMETERS.rightPos);
-            telemetryPacket.put("slider state ", StateofSlides);
+            telemetryPacket.put("sliders state ", StateofSlides);
 
-            if(PARAMETERS.leftPos < PARAMETERS.intakePosition - PARAMETERS.leftSlideError || PARAMETERS.leftPos > PARAMETERS.intakePosition + PARAMETERS.leftSlideError){
+            if( (PARAMETERS.leftPos < PARAMETERS.intakePosition - PARAMETERS.leftSlideError && PARAMETERS.rightPos < PARAMETERS.intakePosition - PARAMETERS.righSlideError) || (PARAMETERS.leftPos > PARAMETERS.intakePosition + PARAMETERS.leftSlideError && PARAMETERS.rightPos > PARAMETERS.intakePosition + PARAMETERS.righSlideError) ){
+                // return true reruns action
                 return true;
             }
             else{
@@ -125,9 +121,9 @@ public class SlidesWithActionsForAutos {
 
             telemetryPacket.put("left slider pos ",PARAMETERS.leftPos);
             telemetryPacket.put("right slider pos ",PARAMETERS.rightPos);
-            telemetryPacket.put("slider state ", StateofSlides);
+            telemetryPacket.put("sliders state ", StateofSlides);
 
-            if(PARAMETERS.leftPos < PARAMETERS.LEVEL_1 - PARAMETERS.leftSlideError || PARAMETERS.leftPos > PARAMETERS.LEVEL_1 + PARAMETERS.leftSlideError){
+            if( (PARAMETERS.leftPos < PARAMETERS.LEVEL_1 - PARAMETERS.leftSlideError && PARAMETERS.rightPos < PARAMETERS.LEVEL_1 - PARAMETERS.righSlideError) || (PARAMETERS.leftPos > PARAMETERS.LEVEL_1 + PARAMETERS.leftSlideError && PARAMETERS.rightPos > PARAMETERS.intakePosition + PARAMETERS.righSlideError) ){
                 return true;
             }
             else{
@@ -145,8 +141,8 @@ public class SlidesWithActionsForAutos {
 
             if(initialized == false){
 
-                Slider_ST.setTargetPosition(PARAMETERS.LEVEL_1);
-                Slider_DR.setTargetPosition(PARAMETERS.LEVEL_1);
+                Slider_ST.setTargetPosition(PARAMETERS.LEVEL_2);
+                Slider_DR.setTargetPosition(PARAMETERS.LEVEL_2);
 
                 Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
                 Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
@@ -162,19 +158,109 @@ public class SlidesWithActionsForAutos {
 
             telemetryPacket.put("left slider pos ",PARAMETERS.leftPos);
             telemetryPacket.put("right slider pos ",PARAMETERS.rightPos);
-            telemetryPacket.put("slider state ", StateofSlides);
+            telemetryPacket.put("slider states ", StateofSlides);
 
-            if(PARAMETERS.leftPos < PARAMETERS.LEVEL_1 - PARAMETERS.leftSlideError || PARAMETERS.leftPos > PARAMETERS.LEVEL_1 + PARAMETERS.leftSlideError){
+            if((PARAMETERS.leftPos < PARAMETERS.LEVEL_2 - PARAMETERS.leftSlideError && PARAMETERS.rightPos < PARAMETERS.LEVEL_2 - PARAMETERS.righSlideError) || (PARAMETERS.leftPos > PARAMETERS.LEVEL_2 + PARAMETERS.leftSlideError && PARAMETERS.rightPos > PARAMETERS.LEVEL_2 + PARAMETERS.righSlideError) ){
                 return true;
             }
             else{
-                StateofSlides = Params.State_of_slides.AT_LEVEL_1;
+                StateofSlides = Params.State_of_slides.AT_LEVEL_2;
                 return false;
             }
         }
     }
 
-    public Action Move_To_LEVEL_INTAKE_POSITION(){
+    public class FORAUTO_Move_To_LEVEL_3 implements Action{
+
+        private boolean initialized = false;
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+
+            if(initialized == false){
+
+                Slider_ST.setTargetPosition(PARAMETERS.LEVEL_3);
+                Slider_DR.setTargetPosition(PARAMETERS.LEVEL_3);
+
+                Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                Slider_ST.setPower(PARAMETERS.speedOfSlides);
+                Slider_DR.setPower(PARAMETERS.speedOfSlides);
+
+                initialized = true;
+            }
+
+            PARAMETERS.leftPos = Slider_ST.getCurrentPosition();
+            PARAMETERS.rightPos = Slider_DR.getCurrentPosition();
+
+            telemetryPacket.put("left slider pos ",PARAMETERS.leftPos);
+            telemetryPacket.put("right slider pos ",PARAMETERS.rightPos);
+            telemetryPacket.put("slider states ", StateofSlides);
+
+            if((PARAMETERS.leftPos < PARAMETERS.LEVEL_3 - PARAMETERS.leftSlideError && PARAMETERS.rightPos < PARAMETERS.LEVEL_3 - PARAMETERS.righSlideError) || (PARAMETERS.leftPos > PARAMETERS.LEVEL_3 + PARAMETERS.leftSlideError && PARAMETERS.rightPos > PARAMETERS.LEVEL_3 + PARAMETERS.righSlideError) ){
+                return true;
+            }
+            else{
+                StateofSlides = Params.State_of_slides.AT_LEVEL_2;
+                return false;
+            }
+        }
+    }
+
+    public class FORAUTO_Move_To_LEVEL_4 implements Action{
+
+        private boolean initialized = false;
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+
+            if(initialized == false){
+
+                Slider_ST.setTargetPosition(PARAMETERS.LEVEL_4);
+                Slider_DR.setTargetPosition(PARAMETERS.LEVEL_4);
+
+                Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                Slider_ST.setPower(PARAMETERS.speedOfSlides);
+                Slider_DR.setPower(PARAMETERS.speedOfSlides);
+
+                initialized = true;
+            }
+
+            PARAMETERS.leftPos = Slider_ST.getCurrentPosition();
+            PARAMETERS.rightPos = Slider_DR.getCurrentPosition();
+
+            telemetryPacket.put("left slider pos ",PARAMETERS.leftPos);
+            telemetryPacket.put("right slider pos ",PARAMETERS.rightPos);
+            telemetryPacket.put("slider states ", StateofSlides);
+
+            if((PARAMETERS.leftPos < PARAMETERS.LEVEL_4 - PARAMETERS.leftSlideError && PARAMETERS.rightPos < PARAMETERS.LEVEL_4 - PARAMETERS.righSlideError) || (PARAMETERS.leftPos > PARAMETERS.LEVEL_4 + PARAMETERS.leftSlideError && PARAMETERS.rightPos > PARAMETERS.LEVEL_4 + PARAMETERS.righSlideError) ){
+                return true;
+            }
+            else{
+                StateofSlides = Params.State_of_slides.AT_LEVEL_2;
+                return false;
+            }
+        }
+    }
+
+    public class UNLOCK_SLIDES implements Action{
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            PARAMETERS.SLIDES_ARE_UNLOCKED = true;
+            return false;
+        }
+    }
+
+    public class LOCK_SLIDES implements Action{
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            PARAMETERS.SLIDES_ARE_UNLOCKED = false;
+            return false;
+        }
+    }
+
+    public Action FORAUTO_Move_To_LEVEL_INTAKE_POSITION(){
         if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
             return new FORAUTO_Move_To_LEVEL_INTAKE_POSITION();
         }
@@ -182,7 +268,7 @@ public class SlidesWithActionsForAutos {
             throw new RuntimeException("Slides are locked! Unlock the slides before attempting to move them!!!!!!!");
         }
     }
-    public Action Move_To_LEVEL_1(){
+    public Action FORAUTO_Move_To_LEVEL_1(){
         if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
             return new FORAUTO_Move_To_LEVEL_1();
         }
@@ -190,52 +276,44 @@ public class SlidesWithActionsForAutos {
             throw new RuntimeException("Slides are locked! Unlock the slides before attempting to move them!!!!!!!");
         }
     }
-    public void Move_To__LEVEL_2(){
-
+    public Action FORAUTO_Move_To_LEVEL_2(){
         if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
-
-            Slider_ST.setTargetPosition(PARAMETERS.LEVEL_2);
-            Slider_DR.setTargetPosition(PARAMETERS.LEVEL_2);
-
-            Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            Slider_ST.setPower(PARAMETERS.speedOfSlides);
-            Slider_DR.setPower(PARAMETERS.speedOfSlides);
-
-            StateofSlides = Params.State_of_slides.AT_LEVEL_2;
+            return new FORAUTO_Move_To_LEVEL_2();
+        }
+        else{
+            throw new RuntimeException("Slides are locked! Unlock the slides before attempting to move them!!!!!!!");
         }
     }
-    public void Move_To_LEVEL_3(){
-
+    public Action FORAUTO_Move_To_LEVEL_3(){
         if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
-
-            Slider_ST.setTargetPosition(PARAMETERS.LEVEL_3);
-            Slider_DR.setTargetPosition(PARAMETERS.LEVEL_3);
-
-            Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            Slider_ST.setPower(PARAMETERS.speedOfSlides);
-            Slider_DR.setPower(PARAMETERS.speedOfSlides);
-
-            StateofSlides = Params.State_of_slides.AT_LEVEL_3;
+            return new FORAUTO_Move_To_LEVEL_3();
+        }
+        else{
+            throw new RuntimeException("Slides are locked! Unlock the slides before attempting to move them!!!!!!!");
         }
     }
-    public void Move_To_LEVEL_4(){
-
+    public Action FORAUTO_Move_To_LEVEL_4(){
         if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
-
-            Slider_ST.setTargetPosition(PARAMETERS.LEVEL_4);
-            Slider_DR.setTargetPosition(PARAMETERS.LEVEL_4);
-
-            Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-            Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
-
-            Slider_ST.setPower(PARAMETERS.speedOfSlides);
-            Slider_DR.setPower(PARAMETERS.speedOfSlides);
-
-            StateofSlides = Params.State_of_slides.AT_LEVEL_4;
+            return new FORAUTO_Move_To_LEVEL_4();
         }
+        else{
+            throw new RuntimeException("Slides are locked! Unlock the slides before attempting to move them!!!!!!!");
+        }
+    }
+    public Params.State_of_slides getStateofSlides() {
+        return StateofSlides;
+    }
+    public Action UNLOCK_SLIDES(){
+        return new UNLOCK_SLIDES();
+    }
+    public Action LOCK_SLIDES(){
+        return new LOCK_SLIDES();
+    }
+    public Action CHANGE_SLIDES_UNLOCK_STATE(){
+        if(PARAMETERS.SLIDES_ARE_UNLOCKED == true)
+            return new LOCK_SLIDES();
+        else
+            return new UNLOCK_SLIDES();
+
     }
 }

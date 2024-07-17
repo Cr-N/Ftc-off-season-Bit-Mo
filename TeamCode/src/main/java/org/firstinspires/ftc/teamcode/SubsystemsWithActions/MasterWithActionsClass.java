@@ -56,6 +56,15 @@ public class MasterWithActionsClass {
               rotate.Rotate_To_Purple_Pixel_Deploy_Position()
             );
     }
+    public SequentialAction Score_Yellow(){
+        return new SequentialAction(
+          arm.Arm_To_Deploy_Position(),
+          rotate.Rotate_To_Deploy_Position(),
+          slides.FORAUTO_Move_To_LEVEL_1(),
+          intake.DEPLOY_2(),
+          slides.FORAUTO_Move_To_LEVEL_INTAKE_POSITION()
+        );
+    }
     public SequentialAction Prep_For_TeleOp(){
         return new SequentialAction(
                 intake.PICKUP(),

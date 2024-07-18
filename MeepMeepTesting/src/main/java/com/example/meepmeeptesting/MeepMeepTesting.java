@@ -16,11 +16,22 @@ public class MeepMeepTesting {
                 .build();
 
         myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(11.5, -63.2, Math.PI/2))
+                // SPIKE MARK **LEFT**
+                .lineToY(-40.2)
 
-                .strafeToConstantHeading(new Vector2d(22,-36.2))
-                .strafeToConstantHeading(new Vector2d(22,-39.2))
-                .strafeTo(new Vector2d(30,-45))
+                .splineToLinearHeading(new Pose2d(8.50,-36.2,2.6179938779914944),1)
+
+                .waitSeconds(2)
+
+                // Mergi putin in spate ca sa nu dai in pixelul MOV
+                .strafeTo(new Vector2d(13,-36))
+
+                // Spline catre Backdrop 1
                 .splineToLinearHeading(new Pose2d(48.4,-30.4,0),0)
+
+                .waitSeconds(3)
+
+                // Parcare
                 .strafeTo(new Vector2d(43,-58))
                 .build()
         );

@@ -4,13 +4,16 @@ import com.arcrobotics.ftclib.command.Subsystem;
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.Gamepad;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.teamcode.HardWare.SpecialGamepad;
 
 public class Intake implements Subsystem {
     HardwareMap hardwareMap;
     LinearOpMode myOpmode = null;
+
     public static class Params{
         public double grab_position =43;
         public double pick_up_position = 18;
@@ -62,6 +65,7 @@ public class Intake implements Subsystem {
         if(intakeState == Params.States.HAS_INTAKED){
             claw.turnToAngle(PARAMETERS.DEPLOY_1);
             intakeState = Params.States.DEPLOYED_1;
+            myOpmode.gamepad1.setLedColor(255, 0, 0, 120000);
         }
 
     }
@@ -69,6 +73,7 @@ public class Intake implements Subsystem {
         if(intakeState == Params.States.DEPLOYED_1){
             claw.turnToAngle(PARAMETERS.DEPLOY_2);
             intakeState = Params.States.TO_INTAKE;
+            myOpmode.gamepad1.setLedColor(0, 255, 0, 120000);
         }
     }
     public void Handle_Intaking(){

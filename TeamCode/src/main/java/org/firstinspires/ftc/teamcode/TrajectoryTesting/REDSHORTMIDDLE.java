@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.SubsystemsWithActions.SlidesWithActionsFor
 
 @Config
 @Autonomous
-public class TrajectoriesTestingSHORTMIDDLE extends LinearOpMode {
+public class REDSHORTMIDDLE extends LinearOpMode {
 
     public static double LINE_TO_Y_1_Y = -35;
     public static double WAIT_SECONDS_1 = 1;

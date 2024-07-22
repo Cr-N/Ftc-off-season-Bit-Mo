@@ -44,7 +44,7 @@ public class ArmTest_RotationTest extends LinearOpMode {
         GamepadEx gm1 = new GamepadEx(gamepad1);
         Arm = new SimpleServo(hardwareMap, "Arm", 0, 180, AngleUnit.DEGREES);
         Rotate = new SimpleServo(hardwareMap, "Rotate", 0, 180, AngleUnit.DEGREES);
-        Claw = new SimpleServo(hardwareMap, "Claw", 0, 270, AngleUnit.DEGREES);
+        Claw = new SimpleServo(hardwareMap, "claw", 0, 270, AngleUnit.DEGREES);
         Arm.setInverted(false);
         Arm.turnToAngle(PARAMETERS.SET_ARM_POSITION);
         Rotate.turnToAngle(PARAMETERS.SET_ROTATE_POSITION);

@@ -31,7 +31,7 @@ public class Arm implements Subsystem {
         myOpmode = opMode;
         this.hardwareMap = opMode.hardwareMap;
         if (this.hardwareMap != null) {
-            Arm = new SimpleServo(hardwareMap, "Arm", 0, 180, AngleUnit.DEGREES);
+                Arm = new SimpleServo(hardwareMap, "Arm", 0, 180, AngleUnit.DEGREES);
         } else {
             throw new NullPointerException("HardwareMap is null.");
         }

@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @Config
 @Autonomous
-public class TrajectoriesTestingSHORTLEFT extends LinearOpMode {
+public class REDSHORTLEFT extends LinearOpMode {
 
     public static double LINE_TO_Y_1_Y = -40.2;
     public static double SPLINE_1_X = 6;

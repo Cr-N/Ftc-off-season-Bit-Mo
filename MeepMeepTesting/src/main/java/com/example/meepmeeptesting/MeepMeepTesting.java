@@ -27,24 +27,34 @@ public class MeepMeepTesting {
                 .setConstraints(50, 50, Math.toRadians(180), Math.toRadians(180), 25.85)
                 .build();
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(11.5, -61.5, Math.PI/2))
-                // SPIKE MARK **MIDDLE**
-                .lineToY(LINE_TO_Y_1_Y)
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-35.2, -63.2, Math.PI/2))
 
-                .waitSeconds(WAIT_SECONDS_1)
+                //Spike mark LEFT
+                .splineToLinearHeading(new Pose2d(-46.5,-35,Math.PI/2),2)
 
-                // AJUSTARE sa nu dai in PIXELUL MOV
+                .waitSeconds(0.5)
+                //Go back a little
+                .strafeToSplineHeading(new Vector2d(-46.5,-38),Math.PI/2+Math.PI/6)
+                //Go to stack
+                // Intake one pixel
 
-                .lineToYConstantHeading(LINE_TO_Y_2_Y)
+                // Go to leaving spot
+                .setReversed(true)
+                .splineToLinearHeading(new Pose2d(-35.4,-58.9, Math.PI),0)
 
-                // Spline catre Backdrop 1
-                .splineToLinearHeading(new Pose2d(SPLINE_1_X,SPLINE_1_Y,SPLINE_1_HEADING),SPLINE_1_TANGENT)
+                // Go forward a little(we cross from long to short)
+                .strafeToConstantHeading(new Vector2d(0,-58.9))
 
-                //.splineToConstantHeading(new Vector2d(SPLINE_1_X, SPLINE_1_Y), SPLINE_1_TANGENT) // Spline catre Backdrop 1 tangent 0
-                // deploy pixel 1
-                .waitSeconds(WAIT_SECONDS_2)
+                // Spline to Backboard on the LEFT side
+                .setReversed(true)
+                .splineToConstantHeading(new Vector2d(48.4,-30.4),0)
 
-                .strafeTo(new Vector2d(STRAFE_1_VECTOR_X,STRAFE_1_VECTOR_Y))
+                // Deploy Yellow
+                .waitSeconds(1)
+
+                //Park in the corner
+                .strafeTo(new Vector2d(50,-60))
+
                 .build()
         );
 

@@ -65,7 +65,7 @@ public class Intake implements Subsystem {
         if(intakeState == Params.States.HAS_INTAKED){
             claw.turnToAngle(PARAMETERS.DEPLOY_1);
             intakeState = Params.States.DEPLOYED_1;
-            myOpmode.gamepad1.setLedColor(255, 0, 0, 120000);
+            myOpmode.gamepad1.setLedColor(255, 0, 0, 120000);//red light
         }
 
     }
@@ -73,7 +73,7 @@ public class Intake implements Subsystem {
         if(intakeState == Params.States.DEPLOYED_1){
             claw.turnToAngle(PARAMETERS.DEPLOY_2);
             intakeState = Params.States.TO_INTAKE;
-            myOpmode.gamepad1.setLedColor(0, 255, 0, 120000);
+            myOpmode.gamepad1.setLedColor(0, 255, 0, 120000);//green light
         }
     }
     public void Handle_Intaking(){

@@ -4,6 +4,8 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
+import com.acmerobotics.roadrunner.SequentialAction;
+import com.acmerobotics.roadrunner.SleepAction;
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
 import com.qualcomm.robotcore.hardware.HardwareMap;
@@ -18,16 +20,16 @@ public class RotateWithActions{
         public double Rotate_Deploy_Position =27;
         public double Rotate_START_Position =50;
         public double Rotate_Purple_Pixel_Deploy_Position =110;
+        public double Rotate_Stack_Pickup_Position =130;
         public double Rotate_HangSafe_Position=120; // to be determined
-        public double lower_rotate_error =0.02;
-        public double upper_rotate_error=0.02;
         public double rotate_angle;
         public enum RotationState{
             AT_PICK_UP_POSITION,
             AT_DEPLOY_POSITION,
             AT_START_POSITION,
             AT_HangSafe_Position,
-            AT_PURPLE_PIXEL_DEPLOY_POSITION
+            AT_PURPLE_PIXEL_DEPLOY_POSITION,
+            AT_STACK_PICKUP
         }
     }
 
@@ -40,153 +42,102 @@ public class RotateWithActions{
     public RotateWithActions(HardwareMap hardwareMap) {
         Rotate = new SimpleServo(hardwareMap, "Rotate", 0, 180, AngleUnit.DEGREES);
     }
-
-    public class Rotate_To_Pick_Up_Position implements Action {
-
-        private boolean initialized = false;
+    public class Rotate_To_Stack_Pickup implements Action {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            if(StateOfRotation != Params.RotationState.AT_STACK_PICKUP){
+                Rotate.turnToAngle(PARAMETERS.Rotate_Stack_Pickup_Position);
+            }
+            StateOfRotation = Params.RotationState.AT_STACK_PICKUP;
+            return false;
+        }
+    }
 
-            if(initialized == false){
+    public class Rotate_To_Pick_Up_Position implements Action {
 
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if(StateOfRotation != Params.RotationState.AT_PICK_UP_POSITION){
                     Rotate.turnToAngle(PARAMETERS.Rotate_Pick_Up_Position);
-                    initialized = true;
                 }
-
-            }
-
-            PARAMETERS.rotate_angle = Rotate.getAngle();
-
-            telemetryPacket.put("rotate angle ", PARAMETERS.rotate_angle);
-            telemetryPacket.put("rotate state ", StateOfRotation);
-
-            if(PARAMETERS.rotate_angle < PARAMETERS.Rotate_Pick_Up_Position - PARAMETERS.lower_rotate_error || PARAMETERS.rotate_angle > PARAMETERS.Rotate_Pick_Up_Position + PARAMETERS.upper_rotate_error){
-                // true reruns action
-                return true;
-            }
-            else{
-                // false stops action
-                StateOfRotation = Params.RotationState.AT_PICK_UP_POSITION;
-                return false;
-            }
+            StateOfRotation = Params.RotationState.AT_PICK_UP_POSITION;
+            return false;
         }
     }
 
     public class Rotate_To_Deploy_Position implements Action {
 
-        private boolean initialized = false;
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 
-            if(initialized == false){
-
                 if(StateOfRotation != Params.RotationState.AT_DEPLOY_POSITION){
                     Rotate.turnToAngle(PARAMETERS.Rotate_Deploy_Position);
-                    initialized = true;
                 }
-
-            }
-
-            PARAMETERS.rotate_angle = Rotate.getAngle();
-
-            telemetryPacket.put("rotate angle ", PARAMETERS.rotate_angle);
-            telemetryPacket.put("rotate state ", StateOfRotation);
-
-            if(PARAMETERS.rotate_angle < PARAMETERS.Rotate_Deploy_Position- PARAMETERS.lower_rotate_error || PARAMETERS.rotate_angle > PARAMETERS.Rotate_Deploy_Position + PARAMETERS.upper_rotate_error){
-                // true reruns action
-                return true;
-            }
-            else{
-                // false stops action
                 StateOfRotation = Params.RotationState.AT_DEPLOY_POSITION;
                 return false;
-            }
         }
+
     }
 
     public class Rotate_To_HangSafe_Position implements Action {
 
-        private boolean initialized = false;
-
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 
-            if(initialized == false){
-
                 if(StateOfRotation != Params.RotationState.AT_HangSafe_Position){
                     Rotate.turnToAngle(PARAMETERS.Rotate_HangSafe_Position);
-                    initialized = true;
                 }
-
-            }
-
-            PARAMETERS.rotate_angle = Rotate.getAngle();
-
-            telemetryPacket.put("rotate angle ", PARAMETERS.rotate_angle);
-            telemetryPacket.put("rotate state ", StateOfRotation);
-
-            if(PARAMETERS.rotate_angle < PARAMETERS.Rotate_HangSafe_Position- PARAMETERS.lower_rotate_error || PARAMETERS.rotate_angle > PARAMETERS.Rotate_HangSafe_Position + PARAMETERS.upper_rotate_error){
-                // true reruns action
-                return true;
-            }
-            else{
                 // false stops action
                 StateOfRotation = Params.RotationState.AT_HangSafe_Position;
                 return false;
-            }
         }
     }
 
     public class Rotate_To_Purple_Pixel_Deploy_Position implements Action {
 
-        private boolean initialized = false;
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
 
-            if(initialized == false){
-
                 if(StateOfRotation != Params.RotationState.AT_PURPLE_PIXEL_DEPLOY_POSITION){
                     Rotate.turnToAngle(PARAMETERS.Rotate_Purple_Pixel_Deploy_Position);
-                    initialized = true;
                 }
-
-            }
-
-            PARAMETERS.rotate_angle = Rotate.getAngle();
-
-            telemetryPacket.put("rotate angle ", PARAMETERS.rotate_angle);
-            telemetryPacket.put("rotate state ", StateOfRotation);
-
-            if(PARAMETERS.rotate_angle < PARAMETERS.Rotate_Purple_Pixel_Deploy_Position- PARAMETERS.lower_rotate_error || PARAMETERS.rotate_angle > PARAMETERS.Rotate_Purple_Pixel_Deploy_Position + PARAMETERS.upper_rotate_error){
-                // true reruns action
-                return true;
-            }
-            else{
-                // false stops action
                 StateOfRotation = Params.RotationState.AT_PURPLE_PIXEL_DEPLOY_POSITION;
+                new SleepAction(1.5);
                 return false;
-            }
         }
     }
 
-    public Action Rotate_To_Pick_Up_Position(){
-        return new Rotate_To_Pick_Up_Position();
+    public SequentialAction Rotate_To_Pick_Up_Position(){
+        return new SequentialAction(
+                new SleepAction(1.5),
+                Rotate_To_Pick_Up_Position()
+        );
     }
 
-    public Action Rotate_To_Deploy_Position(){
-        return new Rotate_To_Deploy_Position();
+    public SequentialAction Rotate_To_Deploy_Position(){
+        return new SequentialAction(
+                new SleepAction(1.5),
+                Rotate_To_Deploy_Position()
+        );
     }
-
-    public Action Rotate_To_HangSafe_Position(){
-        return new Rotate_To_HangSafe_Position();
+    public SequentialAction Rotate_To_HangSafe_Position(){
+        return new SequentialAction(
+                new SleepAction(1.5),
+                Rotate_To_HangSafe_Position()
+        );
     }
 
     public Action Rotate_To_Purple_Pixel_Deploy_Position(){
-        return new Rotate_To_Purple_Pixel_Deploy_Position();
+            return new Rotate_To_Purple_Pixel_Deploy_Position();
+    }
+    public SequentialAction Rotate_To_Stack_Intake_Position(){
+        return new SequentialAction(
+                new SleepAction(1.5),
+                Rotate_To_Stack_Intake_Position()
+        );
     }
 
     public RotateWithActions.Params.RotationState Get_State_Of_Rotate(){

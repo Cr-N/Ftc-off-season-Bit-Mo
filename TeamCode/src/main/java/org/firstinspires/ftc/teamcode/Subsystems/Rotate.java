@@ -16,15 +16,15 @@ public class Rotate implements Subsystem {
         public double Rotate_Pick_Up_Position = 110;
         public double Rotate_Deploy_Position =27;
         public double Rotate_START_Position =50;
-        public double Rotate_HangSafe_Position=120; // to be determined
-  //
+        public double Rotate_HangSafe_Position=120;
+
         public enum RotationState{
             AT_PICK_UP_POSITION,
             AT_DEPLOY_POSITION,
             AT_START_POSITION,
             AT_HangSafe_Position
         }
-    } //sdgf
+    }
     public static Rotate.Params PARAMETERS = new Rotate.Params();
     Params.RotationState StateOfRotation = Params.RotationState.AT_START_POSITION;
     private final ServoEx Rotate;

@@ -25,10 +25,10 @@ public class DriveBase {
 
     public void init(){
 
-        FR = new MotorEx(myOpMode.hardwareMap , "FR", Motor.GoBILDA.RPM_223);
-        BL = new MotorEx(myOpMode.hardwareMap , "BL",Motor.GoBILDA.RPM_223);
-        BR = new MotorEx(myOpMode.hardwareMap , "BR",Motor.GoBILDA.RPM_223);
-        FL = new MotorEx(myOpMode.hardwareMap , "FL",Motor.GoBILDA.RPM_223);
+        FR = new MotorEx(myOpMode.hardwareMap , "rightFront", Motor.GoBILDA.RPM_223);
+        BL = new MotorEx(myOpMode.hardwareMap , "leftBack",Motor.GoBILDA.RPM_223);
+        BR = new MotorEx(myOpMode.hardwareMap , "rightBack",Motor.GoBILDA.RPM_223);
+        FL = new MotorEx(myOpMode.hardwareMap , "leftFront",Motor.GoBILDA.RPM_223);
 
         BL.setInverted(true);
         FL.setInverted(true);

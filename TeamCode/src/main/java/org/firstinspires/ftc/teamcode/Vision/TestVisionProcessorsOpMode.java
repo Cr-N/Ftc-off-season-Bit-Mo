@@ -7,12 +7,12 @@ import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
 @TeleOp(name = "Vision Processors Testing", group = "Vision")
 public class TestVisionProcessorsOpMode extends OpMode {
-    private Red3BoxVisionProcessor visionProcessor;
+    private Blue3BoxVisionProcessor visionProcessor;
     private VisionPortal visionPortal;
 
     @Override
     public void init() {
-        visionProcessor = new Red3BoxVisionProcessor();
+        visionProcessor = new Blue3BoxVisionProcessor();
         visionPortal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), visionProcessor);
     }
 

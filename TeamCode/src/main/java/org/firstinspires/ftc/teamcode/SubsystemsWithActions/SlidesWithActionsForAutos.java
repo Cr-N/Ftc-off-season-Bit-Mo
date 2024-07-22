@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 public class SlidesWithActionsForAutos {
 
     public static class Params{
-        public boolean SLIDES_ARE_UNLOCKED=false;
+        public boolean SLIDES_ARE_UNLOCKED=true;
         public int startPosition = 0;
         public int intakePosition = 0;
         public int LEVEL_1 = 200;
@@ -22,8 +22,8 @@ public class SlidesWithActionsForAutos {
         public int leftPos = startPosition;
         public int rightPos = startPosition;
         public double speedOfSlides = 0.5;
-        public double leftSlideError=5;
-        public double righSlideError=5;
+        public double leftSlideError=1;
+        public double righSlideError=3  ;
         public double P_Stanga =3;
         public  double P_Dreapta=3;
         public enum State_of_slides{
@@ -123,7 +123,7 @@ public class SlidesWithActionsForAutos {
             telemetryPacket.put("right slider pos ",PARAMETERS.rightPos);
             telemetryPacket.put("sliders state ", StateofSlides);
 
-            if( (PARAMETERS.leftPos < PARAMETERS.LEVEL_1 - PARAMETERS.leftSlideError && PARAMETERS.rightPos < PARAMETERS.LEVEL_1 - PARAMETERS.righSlideError) || (PARAMETERS.leftPos > PARAMETERS.LEVEL_1 + PARAMETERS.leftSlideError && PARAMETERS.rightPos > PARAMETERS.intakePosition + PARAMETERS.righSlideError) ){
+            if( (PARAMETERS.leftPos < PARAMETERS.LEVEL_1 - PARAMETERS.leftSlideError && PARAMETERS.rightPos < PARAMETERS.LEVEL_1 - PARAMETERS.righSlideError) || (PARAMETERS.leftPos > PARAMETERS.LEVEL_1 + PARAMETERS.leftSlideError && PARAMETERS.rightPos > PARAMETERS.LEVEL_1 + PARAMETERS.righSlideError) ){
                 return true;
             }
             else{
@@ -201,7 +201,7 @@ public class SlidesWithActionsForAutos {
                 return true;
             }
             else{
-                StateofSlides = Params.State_of_slides.AT_LEVEL_2;
+                StateofSlides = Params.State_of_slides.AT_LEVEL_3;
                 return false;
             }
         }
@@ -238,7 +238,7 @@ public class SlidesWithActionsForAutos {
                 return true;
             }
             else{
-                StateofSlides = Params.State_of_slides.AT_LEVEL_2;
+                StateofSlides = Params.State_of_slides.AT_LEVEL_4;
                 return false;
             }
         }

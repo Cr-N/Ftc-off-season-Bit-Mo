@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
@@ -22,13 +21,12 @@ public class IntakeWithActions {
         public double claw_angle;
         public double lower_intake_error = 0.02;
         public double uppper_intake_error = 0.02;
+        public double WAIT_TIME = 0.5;
         public enum States{
             DEPLOYED_1,
             DEPLOYED_2,
             TO_INTAKE,
             HAS_INTAKED
-
-
         };
     }
 
@@ -47,15 +45,13 @@ public class IntakeWithActions {
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-
-
                 if(intakeState == Params.States.TO_INTAKE || intakeState == Params.States.DEPLOYED_2 || intakeState == Params.States.DEPLOYED_1){
                     claw.turnToAngle(PARAMETERS.pick_up_position);
-                    intakeState = Params.States.TO_INTAKE;
 
                 }
-
                 // false stops action
+                new SleepAction(PARAMETERS.WAIT_TIME);
+                intakeState = Params.States.TO_INTAKE;
                 return false;
         }
     }
@@ -66,76 +62,55 @@ public class IntakeWithActions {
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if(intakeState == Params.States.TO_INTAKE){
                     claw.turnToAngle(PARAMETERS.grab_position);
-                    intakeState = Params.States.HAS_INTAKED;
 
                 }
-                new SleepAction(1);
-                // false stops action
+                new SleepAction(PARAMETERS.WAIT_TIME);
+                intakeState = Params.States.HAS_INTAKED;
                 return false;
         }
     }
 
     public class DEPLOY_1 implements Action{
-
-        private boolean initialized = false;
-
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-
-
                 if(intakeState == Params.States.HAS_INTAKED){
                     claw.turnToAngle(PARAMETERS.DEPLOY_1);
-                    intakeState = Params.States.DEPLOYED_1;
 
                 }
-
-                // false stops action
+                new SleepAction(PARAMETERS.WAIT_TIME);
+                intakeState = Params.States.DEPLOYED_1;
                 return false;
 
         }
     }
 
     public class DEPLOY_2 implements Action{
-
-
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-
-
                 if(intakeState == Params.States.DEPLOYED_1){
                     claw.turnToAngle(PARAMETERS.DEPLOY_2);
-                    intakeState = Params.States.DEPLOYED_2;
-
                 }
-
                 // false stops action
-                return false;
-
+            new SleepAction(PARAMETERS.WAIT_TIME);
+            intakeState = Params.States.DEPLOYED_2;
+            return false;
         }
     }
 
-    public SequentialAction PICKUP(){
-        return new SequentialAction(
-                new SleepAction(0.5),
-                PICKUP()
-        );
+    public Action PICKUP(){
+        return new PICKUP();
     }
 
     public Action GRAB(){
              return new GRAB();
     }
 
-    public SequentialAction DEPLOY_1(){
-        return new SequentialAction(
-                new SleepAction(0.5),
-                DEPLOY_1()
-        );    }
+    public Action DEPLOY_1(){
+        return new DEPLOY_1();
+    }
 
-    public SequentialAction DEPLOY_2(){
-        return new SequentialAction(
-                new SleepAction(0.5),
-                DEPLOY_2()
-        );
+    public Action DEPLOY_2(){
+        return new DEPLOY_2();
     }
 
     public void Handle_Intaking(){

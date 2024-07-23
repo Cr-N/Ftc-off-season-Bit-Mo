@@ -4,7 +4,6 @@ import androidx.annotation.NonNull;
 
 import com.acmerobotics.dashboard.telemetry.TelemetryPacket;
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
 import com.arcrobotics.ftclib.hardware.ServoEx;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
@@ -22,6 +21,7 @@ public class RotateWithActions{
         public double Rotate_Purple_Pixel_Deploy_Position =110;
         public double Rotate_Stack_Pickup_Position =130;
         public double Rotate_HangSafe_Position=120; // to be determined
+        public double WAIT_TIME = 1.5;
         public double rotate_angle;
         public enum RotationState{
             AT_PICK_UP_POSITION,
@@ -42,39 +42,38 @@ public class RotateWithActions{
     public RotateWithActions(HardwareMap hardwareMap) {
         Rotate = new SimpleServo(hardwareMap, "Rotate", 0, 180, AngleUnit.DEGREES);
     }
-    public class Rotate_To_Stack_Pickup implements Action {
 
+    public class Rotate_To_Stack_Pickup implements Action {
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-            if(StateOfRotation != Params.RotationState.AT_STACK_PICKUP){
-                Rotate.turnToAngle(PARAMETERS.Rotate_Stack_Pickup_Position);
-            }
+                if(StateOfRotation != Params.RotationState.AT_STACK_PICKUP){
+                    Rotate.turnToAngle(PARAMETERS.Rotate_Stack_Pickup_Position);
+                }
+            new SleepAction(PARAMETERS.WAIT_TIME);
             StateOfRotation = Params.RotationState.AT_STACK_PICKUP;
             return false;
         }
     }
 
     public class Rotate_To_Pick_Up_Position implements Action {
-
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
                 if(StateOfRotation != Params.RotationState.AT_PICK_UP_POSITION){
                     Rotate.turnToAngle(PARAMETERS.Rotate_Pick_Up_Position);
                 }
+            new SleepAction(PARAMETERS.WAIT_TIME);
             StateOfRotation = Params.RotationState.AT_PICK_UP_POSITION;
             return false;
         }
     }
 
     public class Rotate_To_Deploy_Position implements Action {
-
-
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-
-                if(StateOfRotation != Params.RotationState.AT_DEPLOY_POSITION){
-                    Rotate.turnToAngle(PARAMETERS.Rotate_Deploy_Position);
-                }
+                    if(StateOfRotation != Params.RotationState.AT_DEPLOY_POSITION){
+                        Rotate.turnToAngle(PARAMETERS.Rotate_Deploy_Position);
+                    }
+                new SleepAction(PARAMETERS.WAIT_TIME);
                 StateOfRotation = Params.RotationState.AT_DEPLOY_POSITION;
                 return false;
         }
@@ -85,59 +84,44 @@ public class RotateWithActions{
 
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-
-                if(StateOfRotation != Params.RotationState.AT_HangSafe_Position){
-                    Rotate.turnToAngle(PARAMETERS.Rotate_HangSafe_Position);
-                }
+                    if(StateOfRotation != Params.RotationState.AT_HangSafe_Position){
+                        Rotate.turnToAngle(PARAMETERS.Rotate_HangSafe_Position);
+                    }
                 // false stops action
+                new SleepAction(PARAMETERS.WAIT_TIME);
                 StateOfRotation = Params.RotationState.AT_HangSafe_Position;
                 return false;
         }
     }
 
     public class Rotate_To_Purple_Pixel_Deploy_Position implements Action {
-
-
         @Override
         public boolean run(@NonNull TelemetryPacket telemetryPacket) {
-
                 if(StateOfRotation != Params.RotationState.AT_PURPLE_PIXEL_DEPLOY_POSITION){
                     Rotate.turnToAngle(PARAMETERS.Rotate_Purple_Pixel_Deploy_Position);
                 }
+                new SleepAction(PARAMETERS.WAIT_TIME);
                 StateOfRotation = Params.RotationState.AT_PURPLE_PIXEL_DEPLOY_POSITION;
-                new SleepAction(1.5);
                 return false;
         }
     }
 
-    public SequentialAction Rotate_To_Pick_Up_Position(){
-        return new SequentialAction(
-                new SleepAction(1.5),
-                Rotate_To_Pick_Up_Position()
-        );
+    public Action Rotate_To_Pick_Up_Position(){
+        return new Rotate_To_Pick_Up_Position();
     }
-
-    public SequentialAction Rotate_To_Deploy_Position(){
-        return new SequentialAction(
-                new SleepAction(1.5),
-                Rotate_To_Deploy_Position()
-        );
+    public Action Rotate_To_Deploy_Position(){
+        return new Rotate_To_Deploy_Position();
     }
-    public SequentialAction Rotate_To_HangSafe_Position(){
-        return new SequentialAction(
-                new SleepAction(1.5),
-                Rotate_To_HangSafe_Position()
-        );
+    public Action Rotate_To_HangSafe_Position(){
+        return new Rotate_To_HangSafe_Position();
     }
 
     public Action Rotate_To_Purple_Pixel_Deploy_Position(){
             return new Rotate_To_Purple_Pixel_Deploy_Position();
     }
-    public SequentialAction Rotate_To_Stack_Intake_Position(){
-        return new SequentialAction(
-                new SleepAction(1.5),
-                Rotate_To_Stack_Intake_Position()
-        );
+    public Action Rotate_To_Stack_Intake_Position(){
+        return new Rotate_To_Stack_Pickup();
+
     }
 
     public RotateWithActions.Params.RotationState Get_State_Of_Rotate(){

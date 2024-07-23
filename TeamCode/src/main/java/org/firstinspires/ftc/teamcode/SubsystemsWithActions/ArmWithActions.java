@@ -132,6 +132,7 @@ public class ArmWithActions{
             }
             // false stops action
             ArmState = Params.ArmStates.AT_STACK_INTAKE_POSITION;
+            new SleepAction(1.5);
             return false;
 
         }
@@ -162,11 +163,8 @@ public class ArmWithActions{
                 Arm_To_Intermediary_Position()
         );
     }
-    public SequentialAction Arm_To_Stack_Pickup_Position(){
-        return new SequentialAction(
-                new SleepAction(1.5),
-                Arm_To_Stack_Pickup_Position()
-        );
+    public Action Arm_To_Stack_Pickup_Position(){
+             return new Arm_To_Stack_Intake_Position();
     }
     public Action Arm_To_Purple_Pixel_Deploy_Positon(){
          return new Arm_To_Purple_Pixel_Deploy_Positon();

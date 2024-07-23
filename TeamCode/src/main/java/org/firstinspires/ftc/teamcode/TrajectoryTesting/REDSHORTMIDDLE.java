@@ -37,10 +37,10 @@ public class REDSHORTMIDDLE extends LinearOpMode {
         drive = new MecanumDrive(hardwareMap,new Pose2d(11.5, -63.2, Math.PI/2));
         traj = drive.actionBuilder(drive.pose)
                 .afterTime(0.1,master.Prep_For_Purple())
-                .waitSeconds(5)
+                .waitSeconds(1)
                 // SPIKE MARK **MIDDLE**
                 .lineToY(LINE_TO_Y_1_Y)
-
+                .afterTime(0.1,master.intake.DEPLOY_1())
                 .waitSeconds(WAIT_SECONDS_1)
 
                 .lineToYConstantHeading(LINE_TO_Y_2_Y)
@@ -48,10 +48,10 @@ public class REDSHORTMIDDLE extends LinearOpMode {
                 // Spline catre Backdrop 1
                 .splineToLinearHeading(new Pose2d(SPLINE_1_X,SPLINE_1_Y,SPLINE_1_HEADING),SPLINE_1_TANGENT)
                 //.afterTime(0.2,master.Score_Yellow())
+                .afterTime(0.1,master.Score_Yellow())
                 .waitSeconds(WAIT_SECONDS_2)
 
                 .strafeTo(new Vector2d(STRAFE_1_VECTOR_X,STRAFE_1_VECTOR_Y))
-                //.stopAndAdd(master.Prep_For_TeleOp())
                 .build();
         waitForStart();
 

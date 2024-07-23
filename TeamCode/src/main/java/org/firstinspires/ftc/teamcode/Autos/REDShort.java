@@ -1,9 +1,7 @@
 package org.firstinspires.ftc.teamcode.Autos;
 
 import com.acmerobotics.roadrunner.Action;
-import com.acmerobotics.roadrunner.ParallelAction;
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -21,16 +19,41 @@ import org.firstinspires.ftc.vision.VisionPortal;
  * ┛┗┗┛┗┛  ┛ ┗┗┛┗┛┗┛┛ ┗┗┛┛┗ ┻   ┻┗┛  ┗┛┗┛┣┛┗┛┛┗┛┗ ┻ ┗┛┻┛  ┛┗┣┛┣┛┛┗┗┛┛┗┗┛┛┗
  */
 public class REDShort extends LinearOpMode{
+        public static double LEFT_LINE_TO_Y_1_Y = -40.2;
+        public static double LEFT_SPLINE_1_X = 6;
+        public static double LEFT_SPLINE_1_Y = -33.2;
+        public static double LEFT_SPLINE_1_HEADING = 2.09;
+        public static double LEFT_SPLINE_1_TANGENT = 1;
+        public static double LEFT_WAIT_SECONDS_1 = 2;
+        public static double LEFT_STRAFE_1_VECTOR_X = 13;
+        public static double LEFT_STRAFE_1_VECTOR_Y = -36;
+        public static double LEFT_SPLINE_2_X = 50;
+        public static double LEFT_SPLINE_2_Y = -26;
+        public static double LEFT_SPLINE_2_HEADING = Math.PI;
+        public static double LEFT_SPLINE_2_TANGENT = 0;
+        public static double LEFT_WAIT_SECONDS_2 = 3;
+        public static double LEFT_STRAFE_2_VECTOR_X = 46;
+        public static double LEFT_STRAFE_2_VECTOR_Y = -60;
+
+
+        public static double MIDDLE_LINE_TO_Y_1_Y = -35;
+        public static double MIDDLE_WAIT_SECONDS_1 = 1;
+        public static double MIDDLE_LINE_TO_Y_2_Y = -37.7;
+        public static double MIDDLE_SPLINE_1_X = 52;
+        public static double MIDDLE_SPLINE_1_Y = -30;
+        public static double MIDDLE_SPLINE_1_HEADING = Math.PI;
+        public static double MIDDLE_SPLINE_1_TANGENT = 0;
+        public static double MIDDLE_STRAFE_1_VECTOR_X = 50;
+        public static double MIDDLE_STRAFE_1_VECTOR_Y = -60;
+        public static double MIDDLE_WAIT_SECONDS_2 = 2;
+
+
     MasterWithActionsClass master;
     Red3BoxVisionProcessor REDvisionProcessor;
     MecanumDrive drive;
-    Action To_Left_Spike;
-    Action To_Deploy_Yellow_Left;
-    Action To_Deploy_Yellow_Middle;
-    Action To_Deploy_Yellow_Right;
-    Action To_Right_Spike;
-    Action To_Middle_Spike;
-    Action To_Park_In_Corner;
+    Action LEFT;
+    Action MIDDLE;
+    Action RIGHT;
     VisionPortal visionPortal;
     Red3BoxVisionProcessor.Selected CASE;
     @Override
@@ -41,96 +64,94 @@ public class REDShort extends LinearOpMode{
         drive = new MecanumDrive(hardwareMap,new Pose2d(11.5, -63.2, Math.PI/2));
         // left case trajectory
         {
-            To_Left_Spike = drive.actionBuilder(drive.pose)
+            LEFT = drive.actionBuilder(drive.pose)
                     // SPIKE MARK **LEFT**
-                    .lineToY(-40.2)
-                    .splineToLinearHeading(new Pose2d(8.50,-36.2,2.6179938779914944),1)
-                    .stopAndAdd(master.Chech_If_Arm_And_Rotate_Are_At_Deploy_And_Put_Them_There_If_Not())
-                    .build();
-            To_Deploy_Yellow_Left = drive.actionBuilder(new Pose2d(8.50,-36.2,2.6179938779914944))
+                    .lineToY(LEFT_LINE_TO_Y_1_Y)
+
+                    .splineToLinearHeading(new Pose2d(LEFT_SPLINE_1_X,LEFT_SPLINE_1_Y,LEFT_SPLINE_1_HEADING),LEFT_SPLINE_1_TANGENT)
+
+                    .waitSeconds(LEFT_WAIT_SECONDS_1)
+
                     // Mergi putin in spate ca sa nu dai in pixelul MOV
-                    .strafeTo(new Vector2d(13,-36))  // 14 , -40
+                    .strafeTo(new Vector2d(LEFT_STRAFE_1_VECTOR_X,LEFT_STRAFE_1_VECTOR_Y))
+
                     // Spline catre Backdrop 1
-                    .splineToLinearHeading(new Pose2d(48.4,-30.4,0),0)
-                    .build();
-            To_Park_In_Corner = drive.actionBuilder(new Pose2d(48.4,-30.4,0))
+                    .splineToLinearHeading(new Pose2d(LEFT_SPLINE_2_X,LEFT_SPLINE_2_Y,LEFT_SPLINE_2_HEADING),LEFT_SPLINE_2_TANGENT)
+
+                    .waitSeconds(LEFT_WAIT_SECONDS_2)
+
                     // Parcare
-                    .strafeTo(new Vector2d(43,-58))
+                    .strafeTo(new Vector2d(LEFT_STRAFE_2_VECTOR_X,LEFT_STRAFE_2_VECTOR_Y))
                     .build();
 
         }
         // middle case trajectory
         {
-
-            To_Middle_Spike = drive.actionBuilder(drive.pose)
+            MIDDLE = drive.actionBuilder(drive.pose)
+                    .afterTime(0.1,master.Prep_For_Purple())
+                    .waitSeconds(5)
                     // SPIKE MARK **MIDDLE**
-                    .lineToY(-33.2)
+                    .lineToY(MIDDLE_LINE_TO_Y_1_Y)
 
-                    // AJUSTARE sa nu dai in PIXELUL MOV
-                    .lineToYConstantHeading(-37.7) // -40.2
-                    .lineToYSplineHeading(-42.2,0) //-42.2
-                    .build();
+                    .waitSeconds(MIDDLE_WAIT_SECONDS_1)
 
-            To_Deploy_Yellow_Middle = drive.actionBuilder(new Pose2d(11.5,-42.2,0))
+                    .lineToYConstantHeading(MIDDLE_LINE_TO_Y_2_Y)
+
                     // Spline catre Backdrop 1
-                    .splineToConstantHeading(new Vector2d(48.4, -35.4), 0)
-                    // deploy pixel 1
-                    .waitSeconds(1)
+                    .splineToLinearHeading(new Pose2d(MIDDLE_SPLINE_1_X,MIDDLE_SPLINE_1_Y,MIDDLE_SPLINE_1_HEADING),MIDDLE_SPLINE_1_TANGENT)
+                    //.afterTime(0.2,master.Score_Yellow())
+                    .waitSeconds(MIDDLE_WAIT_SECONDS_2)
+
+                    .strafeTo(new Vector2d(MIDDLE_STRAFE_1_VECTOR_X,MIDDLE_STRAFE_1_VECTOR_Y))
+                    //.stopAndAdd(master.Prep_For_TeleOp())
                     .build();
         }
         // right case trajectory
         {
-            To_Right_Spike = drive.actionBuilder(drive.pose)
-
-                    // SPIKE MARK **RIGHT**
-
-                    .strafeToConstantHeading(new Vector2d(22,-36.2))
-
-                    .strafeToConstantHeading(new Vector2d(22,-39.2))
-
-                    // Mergi putin in spate ca sa nu dai in pixelul MOV
-
-                    .strafeTo(new Vector2d(30,-45))
-
-                    .build();
-            To_Deploy_Yellow_Right = drive.actionBuilder(new Pose2d(30,-45,Math.PI/2))
-                    // Spline catre Backdrop 1
-                    .splineToLinearHeading(new Pose2d(48.4,-30.4,0),0)
-                    // deploy pixel 1
-                    .waitSeconds(1)
+            RIGHT = drive.actionBuilder(drive.pose)
                     .build();
         }
         while (opModeInInit() && !isStopRequested()){
 
             switch (REDvisionProcessor.getSelection()){
                 case LEFT:
-                    telemetry.addLine(" ┏┓┏┓┏┓┏┓   ┓  ┏┓ ┏┓ ┏┳┓ ");
-                    telemetry.addLine(" ┃ ┣┫┗┓┣  • ┃  ┣  ┣   ┃  ");
-                    telemetry.addLine(" ┗┛┛┗┗┛┗┛ • ┗┛ ┗┛ ┻   ┻  ");
+
+                    telemetry.addLine("       __   __ _____ ");
+                    telemetry.addLine(" |    |    |     |   ");
+                    telemetry.addLine(" |    |__  |__   |   ");
+                    telemetry.addLine(" |    |    |     |   ");
+                    telemetry.addLine(" |__  |__  |     |   ");
                     telemetry.update();
                     CASE = Red3BoxVisionProcessor.Selected.LEFT;
                     break;
                 case RIGHT:
-                    telemetry.addLine(" ┏┓┏┓┏┓┏┓   ┳┓ ┳ ┏┓ ┓┏ ┏┳┓ ");
-                    telemetry.addLine(" ┃ ┣┫┗┓┣  • ┣┫ ┃ ┃┓ ┣┫  ┃  ");
-                    telemetry.addLine(" ┗┛┛┗┗┛┗┛ • ┛┗ ┻ ┗┛ ┛┗  ┻  ");
+                    telemetry.addLine("       ***");
+                    telemetry.addLine(" ****  ***  *********  **   ** *******");
+                    telemetry.addLine(" *  *   *   *          **   **   **");
+                    telemetry.addLine(" ****   *   *   *****  *******   **");
+                    telemetry.addLine(" **     *   *      **  **   **   **");
+                    telemetry.addLine(" *  *   *   *********  **   **   **");
                     telemetry.update();
                     CASE = Red3BoxVisionProcessor.Selected.LEFT;
 
                     break;
                 case MIDDLE:
-                    telemetry.addLine("┏┓┏┓┏┓┏┓   ┳┳┓ ┳ ┳┓ ┳┓ ┓  ┏┓ ");
-                    telemetry.addLine("┃ ┣┫┗┓┣  • ┃┃┃ ┃ ┃┃ ┃┃ ┃  ┣  ");
-                    telemetry.addLine("┗┛┛┗┗┛┗┛ • ┛ ┗ ┻ ┻┛ ┻┛ ┗┛ ┗┛ ");
+                    telemetry.addLine("  *       *    *   *     *     *      *     **** ");
+                    telemetry.addLine("  * *   * *        * *   * *   *      *     *    ");
+                    telemetry.addLine("  *   *   *    *   *  *  *  *  *      *     **** ");
+                    telemetry.addLine("  *       *    *   * *   * *   *      *     *    ");
+                    telemetry.addLine("  *       *    *   *     *     *****  ***** **** ");
                     telemetry.update();
 
                     CASE = Red3BoxVisionProcessor.Selected.LEFT;
 
                     break;
                 case NONE:
-                    telemetry.addLine("┏┓┏┓┏┓┏┓   ┳┓ ┏┓ ┳┓ ┏┓ ");
-                    telemetry.addLine("┃ ┣┫┗┓┣  • ┃┃ ┃┃ ┃┃ ┣  ");
-                    telemetry.addLine("┗┛┛┗┗┛┗┛ • ┛┗ ┗┛ ┛┗ ┗┛ ");
+                    telemetry.addLine("*     *  *****  *       *  **** ");
+                    telemetry.addLine("* *   *  *   *  * *     *  *    ");
+                    telemetry.addLine("*   * *  *   *  *   *   *  **** ");
+                    telemetry.addLine("*    **  *   *  *     * *  *    ");
+                    telemetry.addLine("*     *  *****  *       *  **** ");
                     telemetry.update();
                     CASE = Red3BoxVisionProcessor.Selected.RIGHT;
                     break;
@@ -140,53 +161,17 @@ public class REDShort extends LinearOpMode{
         switch (CASE){
             case LEFT:
                 Actions.runBlocking(
-                        new SequentialAction(
-                            master.Prep_For_Purple(),
-                            To_Left_Spike,
-                            master.intake.DEPLOY_1(),
-                                new ParallelAction(
-                                        master.Chech_If_Arm_And_Rotate_Are_At_Deploy_And_Put_Them_There_If_Not(),
-                                        To_Deploy_Yellow_Left
-                                ),
-                            master.slides.FORAUTO_Move_To_LEVEL_1(),
-                            master.intake.DEPLOY_2(),
-                            To_Park_In_Corner,
-                            master.Prep_For_TeleOp()
-                        )
+                    LEFT
                 );
                 break;
             case MIDDLE:
                 Actions.runBlocking(
-                        new SequentialAction(
-                                master.Prep_For_Purple(),
-                                To_Middle_Spike,
-                                master.intake.DEPLOY_1(),
-                                new ParallelAction(
-                                        master.Chech_If_Arm_And_Rotate_Are_At_Deploy_And_Put_Them_There_If_Not(),
-                                        To_Deploy_Yellow_Middle
-                                ),
-                                master.slides.FORAUTO_Move_To_LEVEL_1(),
-                                master.intake.DEPLOY_2(),
-                                To_Park_In_Corner,
-                                master.Prep_For_TeleOp()
-                        )
+                        MIDDLE
                 );
                 break;
             case RIGHT:
                 Actions.runBlocking(
-                        new SequentialAction(
-                                master.Prep_For_Purple(),
-                                To_Right_Spike,
-                                master.intake.DEPLOY_1(),
-                                new ParallelAction(
-                                        master.Chech_If_Arm_And_Rotate_Are_At_Deploy_And_Put_Them_There_If_Not(),
-                                        To_Deploy_Yellow_Right
-                                ),
-                                master.slides.FORAUTO_Move_To_LEVEL_1(),
-                                master.intake.DEPLOY_2(),
-                                To_Park_In_Corner,
-                                master.Prep_For_TeleOp()
-                        )
+                        RIGHT
                 );
                 break;
         }

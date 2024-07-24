@@ -105,7 +105,17 @@ public class RotateWithActions{
                 return false;
         }
     }
-
+    public class Rotate_To_Start_For_Tele implements Action{
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+            if(StateOfRotation != Params.RotationState.AT_START_POSITION){
+                Rotate.turnToAngle(PARAMETERS.Rotate_START_Position);
+            }
+            new SleepAction(PARAMETERS.WAIT_TIME);
+            StateOfRotation = Params.RotationState.AT_START_POSITION;
+            return false;
+        }
+    }
     public Action Rotate_To_Pick_Up_Position(){
         return new Rotate_To_Pick_Up_Position();
     }
@@ -114,6 +124,9 @@ public class RotateWithActions{
     }
     public Action Rotate_To_HangSafe_Position(){
         return new Rotate_To_HangSafe_Position();
+    }
+    public Action Rotate_To_Start_For_Tele(){
+        return new Rotate_To_Start_For_Tele();
     }
 
     public Action Rotate_To_Purple_Pixel_Deploy_Position(){

@@ -16,7 +16,7 @@ public class IntakeWithActions {
     public static class Params{
         public double grab_position =43;
         public double pick_up_position = 18;
-        public double DEPLOY_1 = 25;
+        public double DEPLOY_1 = 27;
         public double DEPLOY_2 = 18;
         public double claw_angle;
         public double lower_intake_error = 0.02;

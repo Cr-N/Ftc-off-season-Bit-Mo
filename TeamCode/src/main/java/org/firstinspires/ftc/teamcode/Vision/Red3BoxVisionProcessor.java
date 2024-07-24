@@ -17,9 +17,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Red3BoxVisionProcessor implements VisionProcessor {
-    public Rect rectLeft = new Rect(120, 208, 110, 110); // 60 104 55 55
-    public Rect rectMiddle = new Rect(280, 208, 110, 110); // 140 104 55 55
-    public Rect rectRight = new Rect(440, 208, 110, 110); // 220 104 55 55
+    public Rect rectLeft = new Rect(0, 145, 174, 280); // 60 104 55 55
+    public Rect rectMiddle = new Rect(199, 174, 291, 216); // 140 104 55 55
+    public Rect rectRight = new Rect(497, 145, 142, 277); // 220 104 55 55
     Selected selection = Selected.NONE;
     Mat submat = new Mat();
     Mat hsvMat = new Mat();

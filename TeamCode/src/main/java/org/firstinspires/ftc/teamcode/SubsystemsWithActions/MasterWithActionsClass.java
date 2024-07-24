@@ -51,7 +51,14 @@ public class MasterWithActionsClass {
     }
     public SequentialAction Prep_For_Purple(){
             return new SequentialAction(
+              intake.PICKUP(),
+              arm.Arm_To_Intermediary_Position(),
+              rotate.Rotate_To_Pick_Up_Position(),
+              new SleepAction(1.5),
+              arm.Arm_To_PickUp_Position(),
+              new SleepAction(1),
               intake.GRAB(),
+              new SleepAction(2),
               arm.Arm_To_Purple_Pixel_Deploy_Positon(),
               rotate.Rotate_To_Purple_Pixel_Deploy_Position()
             );
@@ -60,18 +67,20 @@ public class MasterWithActionsClass {
         return new SequentialAction(
           arm.Arm_To_Deploy_Position(),
           rotate.Rotate_To_Deploy_Position(),
-          slides.FORAUTO_Move_To_LEVEL_1(),
-          intake.DEPLOY_2(),
+                new SleepAction(1),
+                slides.FORAUTO_Move_To_LEVEL_1(),
+                new SleepAction(0.5),
+                intake.DEPLOY_2(),
+          new SleepAction(1),
           slides.FORAUTO_Move_To_LEVEL_INTAKE_POSITION()
-        );
+          );
     }
     public SequentialAction Prep_For_TeleOp(){
         return new SequentialAction(
                 intake.PICKUP(),
-                rotate.Rotate_To_Pick_Up_Position(),
+                rotate.Rotate_To_Start_For_Tele(),
                 arm.Arm_To_Intermediary_Position(),
-                slides.FORAUTO_Move_To_LEVEL_INTAKE_POSITION(),
-                slides.LOCK_SLIDES()
+                slides.FORAUTO_Move_To_LEVEL_INTAKE_POSITION()
         );
     }
 }

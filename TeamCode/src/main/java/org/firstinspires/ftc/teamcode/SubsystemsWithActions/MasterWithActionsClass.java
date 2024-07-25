@@ -77,6 +77,18 @@ public class MasterWithActionsClass {
           slides.FORAUTO_Move_To_LEVEL_INTAKE_POSITION()
           );
     }
+    public SequentialAction Score_Yellow_MIDDLE_SHORT(){
+        return new SequentialAction(
+                arm.Arm_To_Deploy_Position(),
+                rotate.Rotate_To_Deploy_Position(),
+                new SleepAction(1),
+                slides.FORAUTO_Move_To_LEVEL_1_5(),
+                new SleepAction(0.5),
+                intake.DEPLOY_2(),
+                new SleepAction(0.5),
+                slides.FORAUTO_Move_To_LEVEL_INTAKE_POSITION()
+        );
+    }
     public SequentialAction Prep_For_TeleOp(){
         return new SequentialAction(
                 intake.PICKUP(),

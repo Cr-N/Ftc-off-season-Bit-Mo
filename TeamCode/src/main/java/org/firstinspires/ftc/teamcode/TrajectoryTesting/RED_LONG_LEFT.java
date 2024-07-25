@@ -31,7 +31,7 @@ public class RED_LONG_LEFT extends LinearOpMode {
    public static double STRAFE_2_VECTOR_X = 5;
    public static double STRAFE_2_VECTOR_Y = -58.9;
    public static double SPLINE_3_X = 48.4;
-   public static double SPLINE_3_Y = -24;
+   public static double SPLINE_3_Y = -21; // -22.4
    public static double SPLINE_3_TANGENT = 0;
    public static double WAIT_SECONDS_2 = 2;
    public static double PARK_X = 50;

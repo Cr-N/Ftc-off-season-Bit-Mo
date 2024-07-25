@@ -16,6 +16,7 @@ public class SlidesWithActionsForAutos {
         public int startPosition = 0;
         public int intakePosition = 0;
         public int LEVEL_1 = 200;
+        public int LEVEL_1_5 = 400;
         public int LEVEL_2 = 550;
         public int LEVEL_3 = 1100;
         public int LEVEL_4 = 1300;
@@ -29,6 +30,7 @@ public class SlidesWithActionsForAutos {
         public enum State_of_slides{
             INTAKE_POSITION,
             AT_LEVEL_1,
+            AT_LEVEL_1_5,
             AT_LEVEL_2,
             AT_LEVEL_3,
             AT_LEVEL_4,
@@ -128,6 +130,43 @@ public class SlidesWithActionsForAutos {
             }
             else{
                 StateofSlides = Params.State_of_slides.AT_LEVEL_1;
+                return false;
+            }
+        }
+    }
+
+    public class FORAUTO_Move_To_LEVEL_1_5 implements Action{
+
+        private boolean initialized = false;
+        @Override
+        public boolean run(@NonNull TelemetryPacket telemetryPacket) {
+
+            if(initialized == false){
+
+                Slider_ST.setTargetPosition(PARAMETERS.LEVEL_1_5);
+                Slider_DR.setTargetPosition(PARAMETERS.LEVEL_1_5);
+
+                Slider_DR.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                Slider_ST.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+                Slider_ST.setPower(PARAMETERS.speedOfSlides);
+                Slider_DR.setPower(PARAMETERS.speedOfSlides);
+
+                initialized = true;
+            }
+
+            PARAMETERS.leftPos = Slider_ST.getCurrentPosition();
+            PARAMETERS.rightPos = Slider_DR.getCurrentPosition();
+
+            telemetryPacket.put("left slider pos ",PARAMETERS.leftPos);
+            telemetryPacket.put("right slider pos ",PARAMETERS.rightPos);
+            telemetryPacket.put("sliders state ", StateofSlides);
+
+            if( (PARAMETERS.leftPos < PARAMETERS.LEVEL_1_5 - PARAMETERS.leftSlideError && PARAMETERS.rightPos < PARAMETERS.LEVEL_1_5 - PARAMETERS.righSlideError) || (PARAMETERS.leftPos > PARAMETERS.LEVEL_1_5 + PARAMETERS.leftSlideError && PARAMETERS.rightPos > PARAMETERS.LEVEL_1_5 + PARAMETERS.righSlideError) ){
+                return true;
+            }
+            else{
+                StateofSlides = Params.State_of_slides.AT_LEVEL_1_5;
                 return false;
             }
         }
@@ -276,6 +315,15 @@ public class SlidesWithActionsForAutos {
             throw new RuntimeException("Slides are locked! Unlock the slides before attempting to move them!!!!!!!");
         }
     }
+    public Action FORAUTO_Move_To_LEVEL_1_5(){
+        if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
+            return new FORAUTO_Move_To_LEVEL_1_5();
+        }
+        else{
+            throw new RuntimeException("Slides are locked! Unlock the slides before attempting to move them!!!!!!!");
+        }
+    }
+
     public Action FORAUTO_Move_To_LEVEL_2(){
         if(PARAMETERS.SLIDES_ARE_UNLOCKED == true){
             return new FORAUTO_Move_To_LEVEL_2();

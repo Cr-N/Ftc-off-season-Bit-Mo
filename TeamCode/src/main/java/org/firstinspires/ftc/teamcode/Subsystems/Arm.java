@@ -15,7 +15,7 @@ public class Arm implements Subsystem {
         public double Arm_Pick_Up_Position =25;
         public double Arm_Deploy_Position = 145;
         public double Arm_HangSafe_Position = 140;
-        public double Arm_Intermediary_Position =35;
+        public double Arm_Intermediary_Position =45;
         public enum ArmStates{
             AT_PICK_UP_POSITION,
             AT_HangSafe_POSITION,

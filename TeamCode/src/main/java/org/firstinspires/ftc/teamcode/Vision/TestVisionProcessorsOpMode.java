@@ -12,7 +12,7 @@ public class TestVisionProcessorsOpMode extends OpMode {
 
     @Override
     public void init() {
-        visionProcessor = new HeightFilterBlue3Box(telemetry);
+        visionProcessor = new HeightFilterBlue3Box();
         visionPortal = VisionPortal.easyCreateWithDefaults(hardwareMap.get(WebcamName.class, "Webcam 1"), visionProcessor);
     }
 

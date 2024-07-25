@@ -31,9 +31,9 @@ public class HeightFilterRed3Box implements VisionProcessor {
     List<MatOfPoint> contours = new ArrayList<>();
     Mat hierarchy = new Mat();
 
-    public HeightFilterRed3Box(Telemetry telemetry) {
-        this.telemetry = telemetry;
-    }
+    //public HeightFilterRed3Box(Telemetry telemetry) {
+       // this.telemetry = telemetry;
+    //}
 
     @Override
     public void init(int width, int height, CameraCalibration cameraCalibration) {
@@ -50,12 +50,12 @@ public class HeightFilterRed3Box implements VisionProcessor {
         double redBlobAreaMiddle = getRedBlobArea(hsvMat, rectMiddle);
         double redBlobAreaRight = getRedBlobArea(hsvMat, rectRight);
 
-        telemetry.addData("CASE: ", selection);
-        telemetry.addData("Left box area: ", redBlobAreaLeft);
-        telemetry.addData("Middle box area: ", redBlobAreaMiddle);
-        telemetry.addData("Right box area: ", redBlobAreaRight);
-        telemetry.addData("Largest Blob Rect: ", largestBlobRect.toString());
-        telemetry.update();
+//        telemetry.addData("CASE: ", selection);
+//        telemetry.addData("Left box area: ", redBlobAreaLeft);
+//        telemetry.addData("Middle box area: ", redBlobAreaMiddle);
+//        telemetry.addData("Right box area: ", redBlobAreaRight);
+//        telemetry.addData("Largest Blob Rect: ", largestBlobRect.toString());
+//        telemetry.update();
 
         if ((redBlobAreaLeft > redBlobAreaMiddle) && (redBlobAreaLeft > redBlobAreaRight)) {
             selection = Selected.LEFT;

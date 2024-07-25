@@ -16,20 +16,18 @@ import org.firstinspires.ftc.teamcode.SubsystemsWithActions.MasterWithActionsCla
 @Autonomous
 public class RED_SHORT_MIDDLE extends LinearOpMode {
     MasterWithActionsClass master;
-    public static double LINE_TO_Y_1_Y = -36;
-    public static double WAIT_SECONDS_1 = 1;
-    public static double LINE_TO_Y_2_Y = -37.7;
-
-    public static double SPLINE_1_X = 59.4;
-    public static double SPLINE_1_Y = -26.7;
-    public static double SPLINE_1_HEADING = Math.PI;
-    public static double SPLINE_1_TANGENT = 0;
-
-    public static double WAIT_SECONDS_2 = 2;
-    public static double WAIT_SECONDS_3 = 2;
-    public static double PARK_X = 53;
-    public static double PARK_Y = -60;
-    public static double PARK_TANGENT = 0;
+    double MIDDLE_LINE_TO_Y_1_Y = -36;
+    double MIDDLE_WAIT_SECONDS_1 = 2;
+    double MIDDLE_LINE_TO_Y_2_Y = -37.7;
+    double MIDDLE_SPLINE_1_X = 59.4;
+    double MIDDLE_SPLINE_1_Y = -28.7;
+    double MIDDLE_SPLINE_1_HEADING = Math.PI;
+    double MIDDLE_SPLINE_1_TANGENT = 0;
+    double MIDDLE_WAIT_SECONDS_2 = 2;
+    double MIDDLE_WAIT_SECONDS_3 = 2;
+    double MIDDLE_PARK_X = 53;
+    double MIDDLE_PARK_Y = -60;
+    double MIDDLE_PARK_TANGENT = 0;
 
     Action traj;
     MecanumDrive drive;
@@ -39,21 +37,21 @@ public class RED_SHORT_MIDDLE extends LinearOpMode {
         drive = new MecanumDrive(hardwareMap,new Pose2d(11.5, -63.2, Math.PI/2));
         traj = drive.actionBuilder(drive.pose)
 
-                .lineToY(LINE_TO_Y_1_Y)
+                .lineToY(MIDDLE_LINE_TO_Y_1_Y)
                 .afterTime(0.1,master.intake.DEPLOY_1())
-                .waitSeconds(WAIT_SECONDS_1)
+                .waitSeconds(MIDDLE_WAIT_SECONDS_1)
 
-                .lineToYConstantHeading(LINE_TO_Y_2_Y)
+                .lineToYConstantHeading(MIDDLE_LINE_TO_Y_2_Y)
 
                 .setReversed(true)
-                .splineToLinearHeading(new Pose2d(SPLINE_1_X,SPLINE_1_Y,SPLINE_1_HEADING),SPLINE_1_TANGENT)
+                .splineToLinearHeading(new Pose2d(MIDDLE_SPLINE_1_X,MIDDLE_SPLINE_1_Y,MIDDLE_SPLINE_1_HEADING),MIDDLE_SPLINE_1_TANGENT)
 
-                .afterTime(0.1,master.Score_Yellow())
-                .waitSeconds(WAIT_SECONDS_2)
+                .afterTime(0.1,master.Score_Yellow_MIDDLE_SHORT())
+                .waitSeconds(MIDDLE_WAIT_SECONDS_2)
 
                 .afterTime(0.1,master.Prep_For_TeleOp())
 
-                .splineToConstantHeading(new Vector2d(PARK_X,PARK_Y),PARK_TANGENT)
+                .splineToConstantHeading(new Vector2d(MIDDLE_PARK_X,MIDDLE_PARK_Y),MIDDLE_PARK_TANGENT)
                 .build();
 
         Actions.runBlocking(

@@ -3,10 +3,12 @@ package org.firstinspires.ftc.teamcode.tests;
 import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.Subsystems.ColorSensor;
+@Disabled
 @TeleOp
 public class ColorSensorSubsystemTest extends LinearOpMode {
     ColorSensor colorSensor;

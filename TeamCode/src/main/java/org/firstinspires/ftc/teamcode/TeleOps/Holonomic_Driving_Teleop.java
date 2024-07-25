@@ -8,8 +8,8 @@ import org.firstinspires.ftc.teamcode.HardWare.Hardware;
 //
 // https://www.youtube.com/watch?v=gnSW2QpkGXQ
 //
-@TeleOp(name = "Un alt fel de TeleOp - DE TESTAT" , group = "TEST")
-public class GavinFordTeleOp extends LinearOpMode {
+@TeleOp(name = "Holonomic Drive" , group = "TEST")
+public class Holonomic_Driving_Teleop extends LinearOpMode {
     Hardware hardware = new Hardware(this);
 
     double x,y,turn,theta,power,sin,cos,max,FLpow,FRpow,BLpow,BRpow;

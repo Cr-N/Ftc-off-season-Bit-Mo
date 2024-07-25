@@ -913,6 +913,7 @@ public class ClaudeAiHelpedNewTry extends LinearOpMode {
 */
 package org.firstinspires.ftc.teamcode.TeleOps;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -932,7 +933,7 @@ import org.firstinspires.ftc.teamcode.HardWare.Hardware;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-
+@Disabled
 @TeleOp(name="Mars Rover: AprilTag Navigation", group = "Mars")
 public class ClaudeAiHelpedNewTry extends LinearOpMode {
     // Constants

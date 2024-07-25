@@ -4,12 +4,14 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.HardWare.ServoMotionProfile;
 import org.firstinspires.ftc.teamcode.HardWare.SpecialGamepad;
+@Disabled
 @Config
 @TeleOp(name = "Servo Motion Profile Test")
 public class ServoMotionProfileTest extends LinearOpMode {

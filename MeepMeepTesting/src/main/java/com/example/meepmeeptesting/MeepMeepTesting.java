@@ -9,41 +9,68 @@ import com.noahbres.meepmeep.roadrunner.entity.RoadRunnerBotEntity;
 public class MeepMeepTesting {
     public static void main(String[] args) {
         MeepMeep meepMeep = new MeepMeep(700);
-        double LINE_TO_Y_1_Y = -38;
-        double WAIT_SECONDS_1 = 1;
-        double LINE_TO_Y_2_Y = -37.7;
-        double SPLINE_1_X = 58;
-        double SPLINE_1_Y = -30;
-        double SPLINE_1_HEADING = Math.PI;
-        double SPLINE_1_TANGENT = 0;
+
+        double LINE_TO_Y_1_Y = -36;
+        double SPILNE_1_X = -51;
+        double SPLINE_1_Y = -37;
+        double SPLINE_1_HEADING = Math.PI/2;
+        double SPLINE_1_TANGENT = 2;
+        double WAIT_SECONDS_1 = 0.5;
+        double STRAFE_1_VECTOR_X = -46.5;
+        double STRAFE_1_VECTOR_Y = -43;
+        double STRAFE_1_HEADING = Math.PI/2+Math.PI/6;
+        double SPLINE_2_X = -35.4;
+        double SPLINE_2_Y = -62;
+        double SPLINE_2_HEADING = Math.PI;
+        double SPLINE_2_TANGENT = 0.5;
+        double STRAFE_2_VECTOR_X = 5;
+        double STRAFE_2_VECTOR_Y = -58.9;
+        double SPLINE_3_X = 48.4;
+        double SPLINE_3_Y = -27;
+        double SPLINE_3_TANGENT = 0;
+        double WAIT_SECONDS_2 = 2;
         double PARK_X = 50;
         double PARK_Y = -60;
-        double PARK_TANGENT = 0;
-        double WAIT_SECONDS_2 = 2;
-        double WAIT_SECONDS_3 = 2;
+
+
 
         RoadRunnerBotEntity myBot = new DefaultBotBuilder(meepMeep)
                 // Set bot constraints: maxVel, maxAccel, maxAngVel, maxAngAccel, track width
                 .setConstraints(50, 50, Math.toRadians(180), Math.toRadians(180), 25.85)
                 .build();
 
-        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(11.5, -63.2, Math.PI/2))
+        myBot.runAction(myBot.getDrive().actionBuilder(new Pose2d(-35.2, -63.2, Math.PI/2))
 
-                //.waitSeconds(WAIT_SECONDS_1)
-                // SPIKE MARK **MIDDLE**
+                //Spike mark LEFT
                 .lineToY(LINE_TO_Y_1_Y)
-                .waitSeconds(WAIT_SECONDS_1)
-
-                .lineToYConstantHeading(LINE_TO_Y_2_Y)
-
-                // Spline catre Backdrop 1
-                        .setReversed(true)
-                .splineToLinearHeading(new Pose2d(SPLINE_1_X,SPLINE_1_Y,SPLINE_1_HEADING),SPLINE_1_TANGENT)
-                //.afterTime(0.2,master.Score_Yellow())
                 .waitSeconds(WAIT_SECONDS_2)
 
-                .waitSeconds(WAIT_SECONDS_3)
-                .splineToConstantHeading(new Vector2d(PARK_X,PARK_Y),PARK_TANGENT)
+                //Go back a little
+                //.strafeToSplineHeading(new Vector2d(STRAFE_1_VECTOR_X,STRAFE_1_VECTOR_Y),STRAFE_1_HEADING)
+                //.waitSeconds(WAIT_SECONDS_2)
+
+                // Go to leaving spot
+                .setReversed(true)
+                .splineToLinearHeading(new Pose2d(SPLINE_2_X,SPLINE_2_Y,SPLINE_2_HEADING),SPLINE_2_TANGENT)
+                //.waitSeconds(WAIT_SECONDS_2)
+
+                // Go forward a little(we cross from long to short)
+                .strafeToConstantHeading(new Vector2d(STRAFE_2_VECTOR_X,STRAFE_2_VECTOR_Y))
+                //.waitSeconds(WAIT_SECONDS_2)
+
+                // Spline to Backboard on the LEFT side
+                .setReversed(true)
+                .splineToConstantHeading(new Vector2d(SPLINE_3_X,SPLINE_3_Y),SPLINE_3_TANGENT)
+                //.waitSeconds(WAIT_SECONDS_2)
+
+                // Deploy Yellow
+                .waitSeconds(WAIT_SECONDS_2)
+
+                //Park in the corner
+                //.strafeTo(new Vector2d(PARK_X,PARK_Y))
+                .splineToConstantHeading(new Vector2d(PARK_X,PARK_Y),SPLINE_3_TANGENT)
+
+
                 .build()
         );
 

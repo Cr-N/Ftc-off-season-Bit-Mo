@@ -4,7 +4,6 @@ package org.firstinspires.ftc.teamcode.TrajectoryTesting;
 import com.acmerobotics.dashboard.config.Config;
 import com.acmerobotics.roadrunner.Action;
 import com.acmerobotics.roadrunner.Pose2d;
-import com.acmerobotics.roadrunner.Vector2d;
 import com.acmerobotics.roadrunner.ftc.Actions;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -14,7 +13,7 @@ import org.firstinspires.ftc.teamcode.SubsystemsWithActions.MasterWithActionsCla
 
 @Config
 @Autonomous
-public class REDSHORTMIDDLE extends LinearOpMode {
+public class RED_SHORT_MIDDLE_STACK_TEST extends LinearOpMode {
     MasterWithActionsClass master;
     public static double LINE_TO_Y_1_Y = -36;
     public static double WAIT_SECONDS_1 = 1;
@@ -53,7 +52,7 @@ public class REDSHORTMIDDLE extends LinearOpMode {
 
                 .afterTime(0.1,master.Prep_For_TeleOp())
 
-                .splineToConstantHeading(new Vector2d(PARK_X,PARK_Y),PARK_TANGENT)
+                //.splineToConstantHeading(new Vector2d(PARK_X,PARK_Y),PARK_TANGENT)
                 .build();
 
         Actions.runBlocking(

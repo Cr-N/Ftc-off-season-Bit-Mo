@@ -14,7 +14,7 @@ import org.firstinspires.ftc.teamcode.SubsystemsWithActions.SlidesWithActionsFor
 
 @Config
 @Autonomous
-public class REDSHORTRIGHT extends LinearOpMode {
+public class RED_SHORT_RIGHT extends LinearOpMode {
 
     public static double STRAFE_1_X = 22;
     public static double STRAFE_1_Y = -36.2;

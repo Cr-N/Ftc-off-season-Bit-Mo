@@ -10,6 +10,7 @@ import com.acmerobotics.roadrunner.InstantAction;
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.SleepAction;
 import com.arcrobotics.ftclib.hardware.SimpleServo;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -17,6 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 
 import java.util.ArrayList;
 import java.util.List;
+@Disabled
 @Config
 @TeleOp
 public class TestServoActionsV2 extends OpMode {

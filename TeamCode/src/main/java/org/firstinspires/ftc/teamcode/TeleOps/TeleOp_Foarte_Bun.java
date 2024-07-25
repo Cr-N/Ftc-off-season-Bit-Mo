@@ -13,8 +13,8 @@ import org.firstinspires.ftc.teamcode.HardWare.SpecialGamepad;
 import org.firstinspires.ftc.teamcode.Subsystems.MasterClass;
 import org.firstinspires.ftc.teamcode.Subsystems.Slides;
 
-@TeleOp
-public class Drive_Arm_Rotate extends LinearOpMode {
+@TeleOp(name="TeleOp special :)", group = "TELEOP")
+public class TeleOp_Foarte_Bun extends LinearOpMode {
     MasterClass master;
 
     private MecanumDrive drive;

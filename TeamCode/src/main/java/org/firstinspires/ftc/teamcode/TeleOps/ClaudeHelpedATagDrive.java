@@ -18,6 +18,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+// Disabled
 @Disabled
 // CHECK THIS FILE: ClaudeAiHelpedNewTry.java !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 @TeleOp(name="Advanced Drive to AprilTag TRY NR 2", group = "Concept")

@@ -68,10 +68,12 @@ public class MasterWithActionsClass {
           arm.Arm_To_Deploy_Position(),
           rotate.Rotate_To_Deploy_Position(),
                 new SleepAction(1),
-                slides.FORAUTO_Move_To_LEVEL_1(),
+                slides.FORAUTO_Move_To_LEVEL_2(),
                 new SleepAction(0.5),
                 intake.DEPLOY_2(),
-          new SleepAction(1),
+                new SleepAction(0.2),
+          slides.FORAUTO_Move_To_LEVEL_1(),
+          new SleepAction(0.5),
           slides.FORAUTO_Move_To_LEVEL_INTAKE_POSITION()
           );
     }

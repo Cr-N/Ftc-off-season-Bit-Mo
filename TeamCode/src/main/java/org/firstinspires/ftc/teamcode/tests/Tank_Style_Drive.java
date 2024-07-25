@@ -4,6 +4,7 @@ import com.acmerobotics.dashboard.FtcDashboard;
 import com.acmerobotics.dashboard.telemetry.MultipleTelemetry;
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.Gamepad;
@@ -11,10 +12,10 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.teamcode.HardWare.Hardware;
-
+@Disabled
 @TeleOp(name = "Simple TeleOp")
 
-public class SimpleTeleOp extends LinearOpMode {
+public class Tank_Style_Drive extends LinearOpMode {
 
     Hardware hardware = new Hardware(this);
     ElapsedTime runtime = new ElapsedTime();    // Use to determine when end game is starting.

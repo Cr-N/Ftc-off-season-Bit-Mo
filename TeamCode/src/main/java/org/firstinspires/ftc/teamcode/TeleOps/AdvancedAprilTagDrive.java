@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
 import com.acmerobotics.dashboard.FtcDashboard;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -17,6 +18,7 @@ import org.firstinspires.ftc.vision.apriltag.AprilTagProcessor;
 
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+@Disabled
 // To do: Make the driveRobot call at the end of the while OpMode is active
 @TeleOp(name="Advanced Drive to AprilTag TRY NR 1", group = "Concept")
 public class AdvancedAprilTagDrive extends LinearOpMode {

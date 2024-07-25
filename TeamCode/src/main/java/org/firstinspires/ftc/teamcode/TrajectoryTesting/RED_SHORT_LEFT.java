@@ -13,7 +13,7 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 
 @Config
 @Autonomous
-public class REDSHORTLEFT extends LinearOpMode {
+public class RED_SHORT_LEFT extends LinearOpMode {
 
     public static double LINE_TO_Y_1_Y = -40.2;
     public static double SPLINE_1_X = 6;
@@ -28,8 +28,9 @@ public class REDSHORTLEFT extends LinearOpMode {
     public static double SPLINE_2_HEADING = Math.PI;
     public static double SPLINE_2_TANGENT = 0;
     public static double WAIT_SECONDS_2 = 3;
-    public static double STRAFE_2_VECTOR_X = 46;
-    public static double STRAFE_2_VECTOR_Y = -60;
+    public static double PARK_X = 53;
+    public static double PARK_Y = -60;
+    public static double PARK_TANGENT = 0;
 
 
 
@@ -58,7 +59,7 @@ public class REDSHORTLEFT extends LinearOpMode {
                 .waitSeconds(WAIT_SECONDS_2)
 
                 // Parcare
-                .strafeTo(new Vector2d(STRAFE_2_VECTOR_X,STRAFE_2_VECTOR_Y))
+                .splineToConstantHeading(new Vector2d(PARK_X,PARK_Y),PARK_TANGENT)
                 .build();
         waitForStart();
         if(isStopRequested()) return;

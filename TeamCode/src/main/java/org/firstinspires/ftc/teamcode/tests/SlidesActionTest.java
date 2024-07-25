@@ -2,11 +2,12 @@ package org.firstinspires.ftc.teamcode.tests;
 
 import com.acmerobotics.roadrunner.SequentialAction;
 import com.acmerobotics.roadrunner.ftc.Actions;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.teamcode.SubsystemsWithActions.SlidesWithActionsForAutos;
-
+@Disabled
 @TeleOp
 public class SlidesActionTest extends LinearOpMode {
     SlidesWithActionsForAutos slides;

@@ -73,6 +73,7 @@ public class RedLongLeftPath {
 
                         //Park in the corner
                         .strafeTo(new Vector2d(48.3,-58))
+                        .splineToConstantHeading(new Vector2d(48.3,-58),0)
 
                 .build());
 

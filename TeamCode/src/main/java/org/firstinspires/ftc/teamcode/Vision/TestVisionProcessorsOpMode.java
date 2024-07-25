@@ -5,7 +5,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.hardware.camera.WebcamName;
 import org.firstinspires.ftc.vision.VisionPortal;
-@TeleOp(name = "Vision Processors Testing", group = "Vision")
+@TeleOp(name = "TEST Detectie", group = "Vision")
 public class TestVisionProcessorsOpMode extends OpMode {
     private HeightFilterBlue3Box visionProcessor;
     private VisionPortal visionPortal;

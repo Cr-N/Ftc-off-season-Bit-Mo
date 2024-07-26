@@ -11,10 +11,9 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
-
 @Config
 @TeleOp
-public class Arm_Rotate_Testing extends LinearOpMode {
+public class Arm_Rotate_Claw_Testing extends LinearOpMode {
     public static class Params{
         public double Arm_Intake_Position =0;
         public double Arm_Deploy_Position = 100;

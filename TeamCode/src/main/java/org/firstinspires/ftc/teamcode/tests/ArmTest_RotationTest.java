@@ -36,7 +36,7 @@ public class ArmTest_RotationTest extends LinearOpMode {
 
     public ServoEx Arm;
     public  ServoEx Rotate;
-    public  ServoEx Claw;
+    public  ServoEx launcher;
     boolean lastDpadUp = false , currentDpadUp,lastDpadDown=false,currentDpadDown , lastX = false,currentX,lastTriangle=false,currentTriangle,lastBack=false,currentBack,lastRB=false,currentRB,lastLB=false,currentLB;
 
     @Override
@@ -45,11 +45,11 @@ public class ArmTest_RotationTest extends LinearOpMode {
         GamepadEx gm1 = new GamepadEx(gamepad1);
         Arm = new SimpleServo(hardwareMap, "Arm", 0, 180, AngleUnit.DEGREES);
         Rotate = new SimpleServo(hardwareMap, "Rotate", 0, 180, AngleUnit.DEGREES);
-        Claw = new SimpleServo(hardwareMap, "claw", 0, 270, AngleUnit.DEGREES);
+        launcher = new SimpleServo(hardwareMap, "launcher", 0, 270, AngleUnit.DEGREES);
         Arm.setInverted(false);
         Arm.turnToAngle(PARAMETERS.SET_ARM_POSITION);
         Rotate.turnToAngle(PARAMETERS.SET_ROTATE_POSITION);
-        Claw.turnToAngle(PARAMETERS.SET_CLAW_POSITION);
+        launcher.turnToAngle(PARAMETERS.SET_CLAW_POSITION);
         waitForStart();
         while(opModeIsActive()){
             {
@@ -84,11 +84,11 @@ public class ArmTest_RotationTest extends LinearOpMode {
             }
             if(currentLB && !lastLB){
                 PARAMETERS.ClawPos += PARAMETERS.moveBy;
-                Claw.turnToAngle(PARAMETERS.ClawPos);
+                launcher.turnToAngle(PARAMETERS.ClawPos);
             }
             if(currentRB && !lastRB){
                 PARAMETERS.ClawPos -= PARAMETERS.moveBy;
-                Claw.turnToAngle(PARAMETERS.ClawPos);
+                launcher.turnToAngle(PARAMETERS.ClawPos);
             }
             {
                 lastDpadUp = currentDpadUp;
@@ -106,6 +106,8 @@ public class ArmTest_RotationTest extends LinearOpMode {
             telemetry.addData("Arm Position: ",Arm.getPosition());
             telemetry.addData("Rotate Angle: ",Rotate.getAngle());
             telemetry.addData("Rotate Position: ",Rotate.getPosition());
+            telemetry.addData("Claw Position: ",launcher.getPosition());
+            telemetry.addData("Claw Angle: ",launcher.getAngle());
             telemetry.update();
         }
     }

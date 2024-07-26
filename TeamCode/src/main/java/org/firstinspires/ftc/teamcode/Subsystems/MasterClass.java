@@ -15,6 +15,7 @@ public class MasterClass {
     public ColorSensor Color_sensor_subsystem;
     public DriveBase driveBase;
     public GamepadEx TRIGGERGAMEPAD;
+    public PlaneLauncher planeLauncher;
     HardwareMap hardwareMap;
     LinearOpMode myOpmode = null;
     public MasterClass(LinearOpMode opMode) {
@@ -27,6 +28,7 @@ public class MasterClass {
         Color_sensor_subsystem = new ColorSensor(myOpmode);
         Claw_subsystem = new Intake(myOpmode);
         driveBase = new DriveBase(myOpmode);
+        planeLauncher = new PlaneLauncher(myOpmode);
     }
 
     public void handleLoweringArm(){

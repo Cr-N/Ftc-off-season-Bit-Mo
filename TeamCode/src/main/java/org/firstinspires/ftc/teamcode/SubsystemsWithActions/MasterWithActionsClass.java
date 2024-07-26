@@ -12,7 +12,7 @@ public class MasterWithActionsClass {
     public IntakeWithActions intake;
     public RotateWithActions rotate;
     public SlidesWithActionsForAutos slides;
-
+    public PlaneLauncherWithActions planeLaucher;
     LinearOpMode myOpmode;
 
     public MasterWithActionsClass(LinearOpMode opMode){
@@ -22,6 +22,7 @@ public class MasterWithActionsClass {
         intake = new IntakeWithActions(myOpmode.hardwareMap);
         rotate = new RotateWithActions(myOpmode.hardwareMap);
         slides = new SlidesWithActionsForAutos(myOpmode.hardwareMap);
+        planeLaucher = new PlaneLauncherWithActions(myOpmode.hardwareMap);
     }
     public SequentialAction Intake_Then_prep_ROTATE_and_ARM_for_Deploy(){
         return new SequentialAction(
@@ -51,6 +52,7 @@ public class MasterWithActionsClass {
     }
     public SequentialAction Prep_For_Purple(){
             return new SequentialAction(
+              planeLaucher.PREP_PLANE(),
               intake.PICKUP(),
               arm.Arm_To_Intermediary_Position(),
               rotate.Rotate_To_Pick_Up_Position(),
@@ -83,6 +85,18 @@ public class MasterWithActionsClass {
                 rotate.Rotate_To_Deploy_Position(),
                 new SleepAction(1),
                 slides.FORAUTO_Move_To_LEVEL_1_5(),
+                new SleepAction(0.5),
+                intake.DEPLOY_2(),
+                new SleepAction(0.5),
+                slides.FORAUTO_Move_To_LEVEL_INTAKE_POSITION()
+        );
+    }
+    public SequentialAction Score_Yellow_LEFT_BLUE_SHORT(){
+        return new SequentialAction(
+                arm.Arm_To_Deploy_Position(),
+                rotate.Rotate_To_Deploy_Position(),
+                new SleepAction(2),
+                slides.FORAUTO_Move_To_LEVEL_2(),
                 new SleepAction(0.5),
                 intake.DEPLOY_2(),
                 new SleepAction(0.5),

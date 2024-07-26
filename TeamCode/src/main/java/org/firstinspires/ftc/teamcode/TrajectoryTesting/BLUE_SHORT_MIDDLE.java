@@ -15,19 +15,19 @@ import org.firstinspires.ftc.teamcode.SubsystemsWithActions.MasterWithActionsCla
 @Disabled
 @Config
 @Autonomous
-public class RED_SHORT_MIDDLE extends LinearOpMode {
+public class BLUE_SHORT_MIDDLE extends LinearOpMode {
     MasterWithActionsClass master;
-    double MIDDLE_LINE_TO_Y_1_Y = -36;
-    double MIDDLE_WAIT_SECONDS_1 = 2;
-    double MIDDLE_LINE_TO_Y_2_Y = -37.7;
+    double MIDDLE_LINE_TO_Y_1_Y = 36;
+    double MIDDLE_WAIT_SECONDS_1 = 2.5;
+    double MIDDLE_LINE_TO_Y_2_Y = 35.7;
     double MIDDLE_SPLINE_1_X = 59.4;
-    double MIDDLE_SPLINE_1_Y = -28.7;
+    double MIDDLE_SPLINE_1_Y = 21.7;
     double MIDDLE_SPLINE_1_HEADING = Math.PI;
     double MIDDLE_SPLINE_1_TANGENT = 0;
     double MIDDLE_WAIT_SECONDS_2 = 2;
     double MIDDLE_WAIT_SECONDS_3 = 2;
-    double MIDDLE_PARK_X = 53;
-    double MIDDLE_PARK_Y = -60;
+    double MIDDLE_PARK_X = 58;
+    double MIDDLE_PARK_Y = 57;
     double MIDDLE_PARK_TANGENT = 0;
 
     Action traj;
@@ -35,11 +35,11 @@ public class RED_SHORT_MIDDLE extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         master = new MasterWithActionsClass(this);
-        drive = new MecanumDrive(hardwareMap,new Pose2d(11.5, -63.2, Math.PI/2));
+        drive = new MecanumDrive(hardwareMap,new Pose2d(11.5, 63.2, 3*Math.PI/2));
         traj = drive.actionBuilder(drive.pose)
 
                 .lineToY(MIDDLE_LINE_TO_Y_1_Y)
-                .afterTime(0.1,master.intake.DEPLOY_1())
+                .afterTime(0,master.intake.DEPLOY_1())
                 .waitSeconds(MIDDLE_WAIT_SECONDS_1)
 
                 .lineToYConstantHeading(MIDDLE_LINE_TO_Y_2_Y)

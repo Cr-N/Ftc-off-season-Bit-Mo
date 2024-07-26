@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode.TeleOps;
 
 import com.arcrobotics.ftclib.gamepad.GamepadEx;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -8,6 +9,7 @@ import org.firstinspires.ftc.teamcode.HardWare.Hardware;
 //
 // https://www.youtube.com/watch?v=gnSW2QpkGXQ
 //
+@Disabled
 @TeleOp(name = "Holonomic Drive" , group = "TEST")
 public class Holonomic_Driving_Teleop extends LinearOpMode {
     Hardware hardware = new Hardware(this);

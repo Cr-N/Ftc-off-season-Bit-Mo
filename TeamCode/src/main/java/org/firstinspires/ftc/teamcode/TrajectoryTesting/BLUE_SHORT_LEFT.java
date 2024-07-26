@@ -16,22 +16,22 @@ import org.firstinspires.ftc.teamcode.SubsystemsWithActions.SlidesWithActionsFor
 @Disabled
 @Config
 @Autonomous
-public class RED_SHORT_RIGHT extends LinearOpMode {
+public class BLUE_SHORT_LEFT extends LinearOpMode {
 
-    double RIGHT_STRAFE_1_X= 28;
-    double RIGHT_STRAFE_1_Y= -52;
-    double RIGHT_SPLINE_1_X = 39.4;;
-    double RIGHT_SPLINE_1_Y = -30;
-    double RIGHT_SPLINE_1_HEADING = Math.PI;
-    double RIGHT_SPLINE_1_TANGENT = 1;
-    double RIGHT_WAIT_SECONDS_1 = 1;
-    double RIGHT_SPLINE_2_X = 57.5;
-    double RIGHT_SPLINE_2_Y = -41;
-    double RIGHT_SPLINE_2_TANGENT = 0;
-    double RIGHT_PARK_X = 55;
-    double RIGHT_PARK_Y = -60;
-    double RIGHT_PARK_TANGENT = 0;
-    double RIGHT_WAIT_SECONDS_2 = 3;
+    double LEFT_STRAFE_1_X= 28;
+    double LEFT_STRAFE_1_Y= 52;
+    double LEFT_SPLINE_1_X = 41;
+    double LEFT_SPLINE_1_Y = 30;
+    double LEFT_SPLINE_1_HEADING = Math.PI;
+    double LEFT_SPLINE_1_TANGENT = 1;
+    double LEFT_WAIT_SECONDS_1 = 1;
+    double LEFT_SPLINE_2_X = 58.7;
+    double LEFT_SPLINE_2_Y = 43;
+    double LEFT_SPLINE_2_TANGENT = 0;
+    double LEFT_PARK_X = 55;
+    double LEFT_PARK_Y = 60;
+    double LEFT_PARK_TANGENT = 0;
+    double LEFT_WAIT_SECONDS_2 = 5;
 
 
     SlidesWithActionsForAutos slides;
@@ -41,24 +41,24 @@ public class RED_SHORT_RIGHT extends LinearOpMode {
     @Override
     public void runOpMode() throws InterruptedException {
         slides = new SlidesWithActionsForAutos(hardwareMap);
-        drive = new MecanumDrive(hardwareMap,new Pose2d(11.5, -63.2, Math.PI/2));
+        drive = new MecanumDrive(hardwareMap,new Pose2d(11.5, 63.2, 3*Math.PI/2));
         master = new MasterWithActionsClass(this);
         traj = drive.actionBuilder(drive.pose)
 
                 // SPIKE MARK RIGHT
-                .strafeTo(new Vector2d(RIGHT_STRAFE_1_X, RIGHT_STRAFE_1_Y))
-                .splineToLinearHeading(new Pose2d(RIGHT_SPLINE_1_X, RIGHT_SPLINE_1_Y, RIGHT_SPLINE_1_HEADING), RIGHT_SPLINE_1_TANGENT)
+                .strafeTo(new Vector2d(LEFT_STRAFE_1_X, LEFT_STRAFE_1_Y))
+                .splineToLinearHeading(new Pose2d(LEFT_SPLINE_1_X, LEFT_SPLINE_1_Y, LEFT_SPLINE_1_HEADING), LEFT_SPLINE_1_TANGENT)
                 .afterTime(2,master.intake.DEPLOY_1())
-                .waitSeconds(RIGHT_WAIT_SECONDS_1)
+                .waitSeconds(LEFT_WAIT_SECONDS_1)
 
-                // Strafe to Backdrop
+                // Spline to Backdrop
                 .setReversed(true)
-                .splineToConstantHeading(new Vector2d(RIGHT_SPLINE_2_X,RIGHT_SPLINE_2_Y),RIGHT_SPLINE_2_TANGENT)
-                .afterTime(0,master.Score_Yellow())
-                .waitSeconds(RIGHT_WAIT_SECONDS_2)
+                .splineToConstantHeading(new Vector2d(LEFT_SPLINE_2_X,LEFT_SPLINE_2_Y),LEFT_SPLINE_2_TANGENT)
+                .afterTime(0.1,master.Score_Yellow_LEFT_BLUE_SHORT())
+                .waitSeconds(LEFT_WAIT_SECONDS_2)
 
                 // Park
-                .splineToConstantHeading(new Vector2d(RIGHT_PARK_X,RIGHT_PARK_Y),RIGHT_PARK_TANGENT)
+                .splineToConstantHeading(new Vector2d(LEFT_PARK_X,LEFT_PARK_Y),LEFT_PARK_TANGENT)
                 .build();
         Actions.runBlocking(
                 master.Prep_For_Purple()

@@ -7,6 +7,7 @@ import com.arcrobotics.ftclib.gamepad.GamepadEx;
 import com.arcrobotics.ftclib.gamepad.GamepadKeys;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.teamcode.HardWare.DriveBase;
 import org.firstinspires.ftc.teamcode.HardWare.SpecialGamepad;
@@ -22,7 +23,9 @@ public class TeleOp_Foarte_Bun extends LinearOpMode {
     DriveBase driveBase;
     GamepadEx gm1;
     SpecialGamepad gamepadButtonCheck;
-
+    final double ALERT_TIME = 120.0;
+    boolean hasAlerted = false;
+    ElapsedTime runTime = new ElapsedTime();
     boolean INVERTED_CONTROLS;
 
     @Override
@@ -40,9 +43,9 @@ public class TeleOp_Foarte_Bun extends LinearOpMode {
             gamepadButtonCheck = new SpecialGamepad(this);
 
         }
-
+        master.planeLauncher.REST_PLANE();
         waitForStart();
-
+        runTime.reset();
         while (opModeIsActive()){
             if(INVERTED_CONTROLS == false)
             {
@@ -67,6 +70,11 @@ public class TeleOp_Foarte_Bun extends LinearOpMode {
 
             }
             gamepadButtonCheck.updateCurrentStates();
+            if(runTime.seconds() > ALERT_TIME && hasAlerted==false){
+                hasAlerted = true;
+                gamepadButtonCheck.Rumble_Quick_Blip();
+                gamepadButtonCheck.LED_Yellow_Alert();
+            }
             master.Slides_subsystem.UPDATE_Left_Right_Positions(); //TODO: Move this to where we change the mode After testing
             master.Color_sensor_subsystem.Handle_Pixel_Feedback();
             // Control Manual Slidere
@@ -93,6 +101,9 @@ public class TeleOp_Foarte_Bun extends LinearOpMode {
             }
 
             // Changing Control States
+            if(gamepadButtonCheck.isPressed_Button_Right_Bumper()){
+                master.planeLauncher.LAUCH_PLANE();
+            }
             if(gamepadButtonCheck.isPressed_Button_START()){
                 // normally, we would call Sliders_Subsystem.updateLeftRightPos(); ONLY HERE because we don't need to always call for the current position of the motors, only when changing MODES but since this is a test, we will call it at the start of the TeleOp to show the position difference in the Telemetry below
                 //Sliders_Subsystem.updateLeftRightPos(); // We get the current position only when we really need it that would be for checkin for the levels adjustments so that it does not feel weird for the driver

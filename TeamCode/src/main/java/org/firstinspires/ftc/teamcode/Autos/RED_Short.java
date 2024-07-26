@@ -12,15 +12,9 @@ import org.firstinspires.ftc.teamcode.MecanumDrive;
 import org.firstinspires.ftc.teamcode.SubsystemsWithActions.MasterWithActionsClass;
 import org.firstinspires.ftc.teamcode.Vision.HeightFilterRed3Box;
 import org.firstinspires.ftc.vision.VisionPortal;
-// All in one approach /////////////////////////
 
-/*
- * ┏┓┓ ┓   ┳┳┓┏┓┓┏┏┓┳┳┓┏┓┳┓┏┳┓  ┳┏┓  ┏┓┏┓┏┓┏┓┳┓┏┓┏┳┓┏┓┳┓  ┏┓┏┓┏┓┳┓┏┓┏┓┏┓┓┏
- * ┣┫┃ ┃   ┃┃┃┃┃┃┃┣ ┃┃┃┣ ┃┃ ┃   ┃┗┓  ┗┓┣ ┃┃┣ ┣┫┣┫ ┃ ┣ ┃┃  ┣┫┃┃┃┃┣┫┃┃┣┫┃ ┣┫
- * ┛┗┗┛┗┛  ┛ ┗┗┛┗┛┗┛┛ ┗┗┛┛┗ ┻   ┻┗┛  ┗┛┗┛┣┛┗┛┛┗┛┗ ┻ ┗┛┻┛  ┛┗┣┛┣┛┛┗┗┛┛┗┗┛┛┗
- */
 @Autonomous
-public class REDShort extends LinearOpMode{
+public class RED_Short extends LinearOpMode{
 
     double LEFT_LINE_TO_Y_1_Y = -40.2;
     double LEFT_SPLINE_1_X = 7.5;
@@ -62,7 +56,7 @@ public class REDShort extends LinearOpMode{
     double RIGHT_SPLINE_1_TANGENT = 1;
     double RIGHT_WAIT_SECONDS_1 = 1;
     double RIGHT_SPLINE_2_X = 57.5;
-    double RIGHT_SPLINE_2_Y = -41;
+    double RIGHT_SPLINE_2_Y = -44;
     double RIGHT_SPLINE_2_TANGENT = 0;
     double RIGHT_PARK_X = 55;
     double RIGHT_PARK_Y = -60;
